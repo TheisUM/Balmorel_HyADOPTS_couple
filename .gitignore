@@ -221,6 +221,8 @@ __marimo__/
 *.inc
 *.gdx
 *.xlsx
+*.xlsm
+*.pdf
 *.csv
 vensim_models/__pycache__/*
 results/*
