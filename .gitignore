@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Further files to ignore can be added below
+*.inc
+*.gdx
+*.xlsx
+*.csv
+vensim_models/__pycache__/*
+results/*
