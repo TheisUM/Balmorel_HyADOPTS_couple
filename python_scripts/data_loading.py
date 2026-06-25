@@ -42,10 +42,14 @@ class data_loading_class:
         # Post data padding:
         last_year = series.index[-1]
         new_last_year = last_year + 20
-        new_last_years = list(np.arange(last_year+1,new_last_year+1))
+        new_last_years = list(np.arange(last_year+1, new_last_year+1))
         new_last_value = series.iloc[-1]
         new_last_values = [new_last_value] * len(new_last_years)
-        return pd.Series(data=[new_first_value], index=[new_first_year])._append(series)._append(pd.Series(data=new_last_values, index=new_last_years))
+        return pd.concat([
+            pd.Series(data=[new_first_value], index=[new_first_year]),
+            series,
+            pd.Series(data=new_last_values, index=new_last_years)
+        ])
     
     # Function which loads the carbon taxes from self
     def load_carbon_taxes(self, *args, **kwargs):
