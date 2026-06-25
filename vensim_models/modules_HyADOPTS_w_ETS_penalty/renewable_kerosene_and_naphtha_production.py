@@ -43,8 +43,8 @@ def biokero_h2_wtp():
     comp_subtype="Normal",
     depends_on={
         "hvo_naphtha_cost_wo_h2": 1,
-        "bionaphtha_h2_cost": 1,
         "hvo_naphtha_h2_cost_scaler": 1,
+        "bionaphtha_h2_cost": 1,
     },
 )
 def bionaphtha_cost():
@@ -131,9 +131,9 @@ def htj_excess_heat():
     depends_on={
         "grey_ng_cost": 2,
         "htj_fuel_gas_fraction": 2,
+        "naphtha_cost": 1,
         "jetfuel_cost": 1,
         "htj_kerosene_fraction": 1,
-        "naphtha_cost": 1,
         "htj_naphtha_fraction": 1,
     },
 )
@@ -179,9 +179,9 @@ def htj_h2_usage():
     depends_on={
         "jetfuel_cost": 2,
         "htj_kerosene_fraction": 2,
-        "htj_fuel_gas_fraction": 1,
-        "grey_ng_cost": 1,
         "naphtha_cost": 1,
+        "grey_ng_cost": 1,
+        "htj_fuel_gas_fraction": 1,
         "htj_naphtha_fraction": 1,
     },
 )
@@ -309,8 +309,8 @@ def htj_liquids_lhv():
         "htj_naphtha_fraction": 2,
         "htj_fuel_gas_fraction": 1,
         "grey_ng_cost": 1,
-        "jetfuel_cost": 1,
         "htj_kerosene_fraction": 1,
+        "jetfuel_cost": 1,
     },
 )
 def htj_naphtha_cost_recovery_fraction():
@@ -332,8 +332,8 @@ def htj_naphtha_cost_recovery_fraction():
     depends_on={
         "htj_process_cost_wo_h2": 1,
         "htj_naphtha_cost_recovery_fraction": 1,
-        "htj_naphtha_fraction": 1,
         "htj_liquid_output": 1,
+        "htj_naphtha_fraction": 1,
     },
 )
 def htj_naphtha_cost_wo_h2():
@@ -426,11 +426,11 @@ def htj_opex():
         "htj_liquid_output": 2,
         "htj_excess_heat": 1,
         "heat_cost": 1,
-        "htj_af": 1,
-        "htj_operating_hours": 1,
         "htj_opex": 1,
-        "htj_capex": 1,
+        "htj_af": 1,
         "htj_variable": 1,
+        "htj_capex": 1,
+        "htj_operating_hours": 1,
     },
 )
 def htj_process_cost_wo_h2():
@@ -520,10 +520,10 @@ def hvo_jet_electricity_usage():
         "grey_ng_cost": 2,
         "hvo_jet_lpg_fraction": 2,
         "hvo_jet_fuel_gas_fraction": 2,
-        "hvo_jet_naphtha_fraction": 1,
-        "hvo_jet_kerosene_fraction": 1,
         "naphtha_cost": 1,
         "jetfuel_cost": 1,
+        "hvo_jet_naphtha_fraction": 1,
+        "hvo_jet_kerosene_fraction": 1,
     },
 )
 def hvo_jet_fuel_gas_cost_recovery_fraction():
@@ -580,11 +580,11 @@ def hvo_jet_h2_usage():
     depends_on={
         "jetfuel_cost": 2,
         "hvo_jet_kerosene_fraction": 2,
+        "naphtha_cost": 1,
+        "grey_ng_cost": 1,
         "hvo_jet_lpg_fraction": 1,
         "hvo_jet_fuel_gas_fraction": 1,
         "hvo_jet_naphtha_fraction": 1,
-        "naphtha_cost": 1,
-        "grey_ng_cost": 1,
     },
 )
 def hvo_jet_kerosene_cost_recovery_fraction():
@@ -638,11 +638,11 @@ def hvo_jet_lpg_fraction():
     depends_on={
         "naphtha_cost": 2,
         "hvo_jet_naphtha_fraction": 2,
-        "hvo_jet_lpg_fraction": 1,
-        "jetfuel_cost": 1,
-        "hvo_jet_fuel_gas_fraction": 1,
-        "hvo_jet_kerosene_fraction": 1,
         "grey_ng_cost": 1,
+        "jetfuel_cost": 1,
+        "hvo_jet_kerosene_fraction": 1,
+        "hvo_jet_lpg_fraction": 1,
+        "hvo_jet_fuel_gas_fraction": 1,
     },
 )
 def hvo_jet_naphtha_cost_recovery_fraction():
@@ -804,11 +804,11 @@ def hvo_naphtha_h2_cost_scaler():
         "hvo_jet_gas_usage": 1,
         "uco_price": 1,
         "hvo_jet_biomass_usage": 1,
-        "hvo_jet_af": 1,
-        "hvo_jet_capex": 1,
-        "hvo_jet_variable": 1,
         "hvo_jet_opex": 1,
+        "hvo_jet_capex": 1,
         "hvo_jet_operating_hours": 1,
+        "hvo_jet_variable": 1,
+        "hvo_jet_af": 1,
     },
 )
 def hvo_process_cost_wo_h2():
@@ -843,8 +843,8 @@ def jetfuel_lhv():
     comp_subtype="Normal",
     depends_on={
         "htj_kerosene_cost_wo_h2": 1,
-        "synkero_h2_cost": 1,
         "htj_kerosene_h2_cost_scaler": 1,
+        "synkero_h2_cost": 1,
     },
 )
 def synkero_cost():
@@ -876,8 +876,8 @@ def synkero_h2_wtp():
     comp_subtype="Normal",
     depends_on={
         "htj_naphtha_cost_wo_h2": 1,
-        "htj_naphtha_h2_cost_scaler": 1,
         "synnaphtha_h2_cost": 1,
+        "htj_naphtha_h2_cost_scaler": 1,
     },
 )
 def synnaphtha_cost():

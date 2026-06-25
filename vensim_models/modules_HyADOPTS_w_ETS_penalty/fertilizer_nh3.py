@@ -209,8 +209,8 @@ def blue_nh3_sector_share():
     comp_subtype="Normal",
     depends_on={
         "initial_fertilizer_emissions": 1,
-        "time": 1,
         "emissions_cap_lookup": 1,
+        "time": 1,
     },
 )
 def fertilizer_allocated_emissions():
@@ -227,8 +227,8 @@ def fertilizer_allocated_emissions():
         "blue_nh3_cost": 1,
         "fertilizer_nh3_cost": 1,
         "green_nh3_sector_share": 1,
-        "grey_nh3_cost": 1,
         "grey_nh3_sector_share": 1,
+        "grey_nh3_cost": 1,
     },
 )
 def fertilizer_average_cost():
@@ -291,8 +291,8 @@ def fertilizer_construction_time():
     depends_on={
         "fertilizer_forecast_demand": 1,
         "sum_fertilizer_decommissioning": 1,
-        "fertilizer_backlog": 1,
         "fertilizer_construction_time": 1,
+        "fertilizer_backlog": 1,
         "sum_fertilizer_activity": 1,
         "innovators": 1,
     },
@@ -659,11 +659,11 @@ _delayfixed_green_nh3_decommissioning_subsidy_level = DelayFixed(
     depends_on={"_smooth_green_nh3_desired_investment": 1},
     other_deps={
         "_smooth_green_nh3_desired_investment": {
-            "initial": {"green_nh3_level": 2, "grey_nh3_level": 1, "blue_nh3_level": 1},
+            "initial": {"green_nh3_level": 2, "blue_nh3_level": 1, "grey_nh3_level": 1},
             "step": {
                 "green_nh3_level": 2,
-                "grey_nh3_level": 1,
                 "blue_nh3_level": 1,
+                "grey_nh3_level": 1,
                 "hba_stabilizer": 1,
             },
         }
@@ -817,8 +817,8 @@ def green_nh3_sector_share():
             "step": {
                 "green_nh3_commissioning_subsidy_level": 1,
                 "subsidized_green_nh3_commissioning": 1,
-                "subsidized_green_nh3_decommissioning": 1,
                 "green_nh3_decommissioning_subsidy_level": 1,
+                "subsidized_green_nh3_decommissioning": 1,
             },
         }
     },
@@ -1012,10 +1012,10 @@ _delayfixed_grey_nh3_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "grey_nh3_cost_difference": 2,
-        "slope_decom": 1,
-        "smr_lifetime": 1,
-        "intersec_decom": 1,
         "grey_nh3": 1,
+        "smr_lifetime": 1,
+        "slope_decom": 1,
+        "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
 )
@@ -1155,9 +1155,9 @@ _initial_initial_fertilizer_emissions = Initial(
     comp_subtype="Normal",
     depends_on={
         "fertilizer_h2_subsidy": 1,
+        "blue_nh3_level": 2,
         "grey_nh3_level": 2,
         "green_nh3_bid_share": 1,
-        "blue_nh3_level": 2,
         "green_nh3_level": 1,
     },
 )
@@ -1309,8 +1309,8 @@ def sum_fertilizer_decommissioning():
     comp_subtype="Normal",
     depends_on={
         "subsidized_green_nh3_investment": 1,
-        "green_h2_subsidy": 1,
         "fertilizer_h2_subsidy": 1,
+        "green_h2_subsidy": 1,
     },
 )
 def support_green_nh3():

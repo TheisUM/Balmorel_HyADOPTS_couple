@@ -48,9 +48,9 @@ def biokero_h2_cost():
         "domestic_aviation_subsidy_ytd": 1,
         "international_aviation_subsidy_ytd": 1,
         "biokero_h2_subsidy_limit": 1,
-        "time": 1,
-        "biokero_h2_subsidy_length": 1,
         "biokero_h2_subsidy_size": 1,
+        "biokero_h2_subsidy_length": 1,
+        "time": 1,
     },
 )
 def biokero_h2_subsidy():
@@ -163,9 +163,9 @@ def biomeoh_h2_cost():
     depends_on={
         "meoh_subsidy_ytd": 1,
         "biomeoh_h2_subsidy_limit": 1,
+        "biomeoh_h2_subsidy_size": 1,
         "time": 1,
         "biomeoh_h2_subsidy_length": 1,
-        "biomeoh_h2_subsidy_size": 1,
     },
 )
 def biomeoh_h2_subsidy():
@@ -448,8 +448,8 @@ def emeoh_h2_cost():
         "meoh_subsidy_ytd": 1,
         "emeoh_h2_subsidy_limit": 1,
         "emeoh_h2_subsidy_size": 1,
-        "time": 1,
         "emeoh_h2_subsidy_length": 1,
+        "time": 1,
     },
 )
 def emeoh_h2_subsidy():
@@ -562,8 +562,8 @@ def fertilizer_h2_cost():
         "fertilizer_subsidy_ytd": 1,
         "fertilizer_h2_subsidy_limit": 1,
         "fertilizer_h2_subsidy_length": 1,
-        "time": 1,
         "fertilizer_h2_subsidy_size": 1,
+        "time": 1,
     },
 )
 def fertilizer_h2_subsidy():
@@ -761,9 +761,9 @@ def h2fc_ds_h2_cost():
     depends_on={
         "shipping_nh3_subsidy_ytd": 1,
         "h2fc_ds_h2_subsidy_limit": 1,
+        "h2fc_ds_h2_subsidy_length": 1,
         "h2fc_ds_h2_subsidy_size": 1,
         "time": 1,
-        "h2fc_ds_h2_subsidy_length": 1,
     },
 )
 def h2fc_ds_h2_subsidy():
@@ -896,9 +896,9 @@ def hd_fcev_h2_cost():
     depends_on={
         "heavy_duty_subsidy_ytd": 1,
         "hd_fcev_h2_subsidy_limit": 1,
-        "time": 1,
         "hd_fcev_h2_subsidy_length": 1,
         "hd_fcev_h2_subsidy_size": 1,
+        "time": 1,
     },
 )
 def hd_fcev_h2_subsidy():
@@ -1032,9 +1032,9 @@ def ld_fcev_h2_cost():
     depends_on={
         "light_duty_subsidy_ytd": 1,
         "ld_fcev_h2_subsidy_limit": 1,
-        "time": 1,
-        "ld_fcev_h2_subsidy_size": 1,
         "ld_fcev_h2_subsidy_length": 1,
+        "ld_fcev_h2_subsidy_size": 1,
+        "time": 1,
     },
 )
 def ld_fcev_h2_subsidy():
@@ -1146,9 +1146,9 @@ def meoh_ds_h2_cost():
     depends_on={
         "shipping_meoh_subsidy_ytd": 1,
         "meoh_ds_h2_subsidy_limit": 1,
-        "time": 1,
-        "meoh_ds_h2_subsidy_length": 1,
         "meoh_ds_h2_subsidy_size": 1,
+        "meoh_ds_h2_subsidy_length": 1,
+        "time": 1,
     },
 )
 def meoh_ds_h2_subsidy():
@@ -1261,8 +1261,8 @@ def meoh_is_h2_cost():
         "shipping_meoh_subsidy_ytd": 1,
         "meoh_is_h2_subsidy_limit": 1,
         "meoh_is_h2_subsidy_size": 1,
-        "time": 1,
         "meoh_is_h2_subsidy_length": 1,
+        "time": 1,
     },
 )
 def meoh_is_h2_subsidy():
@@ -1374,9 +1374,9 @@ def nh3_is_h2_cost():
     depends_on={
         "shipping_nh3_subsidy_ytd": 1,
         "nh3_is_h2_subsidy_limit": 1,
-        "time": 1,
         "nh3_is_h2_subsidy_size": 1,
         "nh3_is_h2_subsidy_length": 1,
+        "time": 1,
     },
 )
 def nh3_is_h2_subsidy():
@@ -1503,9 +1503,9 @@ def nm_h2_gj_cost():
     depends_on={
         "high_temperature_subsidy_ytd": 1,
         "nm_h2_subsidy_limit": 1,
+        "nm_h2_subsidy_length": 1,
         "nm_h2_subsidy_size": 1,
         "time": 1,
-        "nm_h2_subsidy_length": 1,
     },
 )
 def nm_h2_subsidy():
@@ -1624,9 +1624,9 @@ def refinery_h2_cost():
     depends_on={
         "refinery_subsidy_ytd": 1,
         "refinery_h2_subsidy_limit": 1,
-        "time": 1,
-        "refinery_h2_subsidy_size": 1,
         "refinery_h2_subsidy_length": 1,
+        "refinery_h2_subsidy_size": 1,
+        "time": 1,
     },
 )
 def refinery_h2_subsidy():
@@ -1738,9 +1738,9 @@ def steel_h2_cost():
     depends_on={
         "steel_subsidy_ytd": 1,
         "steel_h2_subsidy_limit": 1,
-        "time": 1,
         "steel_h2_subsidy_size": 1,
         "steel_h2_subsidy_length": 1,
+        "time": 1,
     },
 )
 def steel_h2_subsidy():
@@ -1944,8 +1944,8 @@ def synkero_h2_cost():
         "international_aviation_subsidy_ytd": 1,
         "synkero_h2_subsidy_limit": 1,
         "synkero_h2_subsidy_length": 1,
-        "time": 1,
         "synkero_h2_subsidy_size": 1,
+        "time": 1,
     },
 )
 def synkero_h2_subsidy():
@@ -2057,9 +2057,9 @@ def synnaphtha_h2_cost():
     depends_on={
         "naphtha_subsidy_ytd": 1,
         "synnaphtha_h2_subsidy_limit": 1,
-        "time": 1,
         "synnaphtha_h2_subsidy_length": 1,
         "synnaphtha_h2_subsidy_size": 1,
+        "time": 1,
     },
 )
 def synnaphtha_h2_subsidy():
@@ -2166,10 +2166,10 @@ _integ_total_subsidy_cost = Integ(
             "step": {
                 "electrolyzer_investments": 1,
                 "electrolyser_capacity": 2,
-                "green_h2_cost": 1,
                 "wac_green_h2": 2,
-                "support_terminations": 1,
+                "green_h2_cost": 1,
                 "delay_green_h2_cost": 1,
+                "support_terminations": 1,
             },
         }
     },

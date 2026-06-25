@@ -11,8 +11,8 @@ Translated using PySD version 3.14.3
     depends_on={
         "ps_cc_cost": 1,
         "cc_capture_rate": 1,
-        "carbon_storage_cost": 1,
         "carbon_tax": 1,
+        "carbon_storage_cost": 1,
     },
 )
 def carbon_cost():

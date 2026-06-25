@@ -298,8 +298,8 @@ def bionaphtha_investment():
     depends_on={
         "bionaphtha_h2_subsidy": 1,
         "bionaphtha_bid_share": 1,
-        "naphtha_equalizer": 1,
         "bionaphtha_level": 1,
+        "naphtha_equalizer": 1,
     },
 )
 def bionaphtha_investment_share():
@@ -353,8 +353,8 @@ def bionaphtha_sector_share():
             "step": {
                 "bionaphtha_commissioning_subsidy_level": 1,
                 "subsidized_bionaphtha_commissioning": 1,
-                "subsidized_bionaphtha_decommissioning": 1,
                 "bionaphtha_decommissioning_subsidy_level": 1,
+                "subsidized_bionaphtha_decommissioning": 1,
             },
         }
     },
@@ -567,10 +567,10 @@ _delayfixed_fossil_naphtha_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "fossil_naphtha_cost_difference": 2,
-        "feedstock_lockin_period": 1,
-        "slope_decom": 1,
-        "fossil_naphtha": 1,
         "intersec_decom": 1,
+        "fossil_naphtha": 1,
+        "slope_decom": 1,
+        "feedstock_lockin_period": 1,
         "economic_decommissioning": 1,
     },
 )
@@ -727,7 +727,7 @@ def naphta_olefin_rate():
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_naphtha_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_naphtha_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def naphtha_allocated_emissions():
     return initial_naphtha_emissions() * emissions_cap_lookup(time())
@@ -741,10 +741,10 @@ def naphtha_allocated_emissions():
     depends_on={
         "bionaphtha_sector_share": 1,
         "bionaphtha_cost": 1,
-        "fossil_naphtha_sector_share": 1,
         "naphtha_cost": 1,
-        "synnaphtha_cost": 1,
+        "fossil_naphtha_sector_share": 1,
         "synnaphtha_sector_share": 1,
+        "synnaphtha_cost": 1,
     },
 )
 def naphtha_average_cost():
@@ -891,10 +891,10 @@ def naphtha_emissions():
     depends_on={
         "bionaphtha_h2_subsidy": 1,
         "bionaphtha_bid_share": 2,
-        "synnaphtha_bid_share": 2,
         "fossil_naphtha_level": 4,
         "synnaphtha_level": 2,
         "synnaphtha_h2_subsidy": 2,
+        "synnaphtha_bid_share": 2,
         "bionaphtha_level": 2,
     },
 )
@@ -1270,8 +1270,8 @@ def support_bionaphtha():
     comp_subtype="Normal",
     depends_on={
         "subsidized_synnaphtha_investment": 1,
-        "synnaphtha_h2_subsidy": 1,
         "green_h2_subsidy": 1,
+        "synnaphtha_h2_subsidy": 1,
     },
 )
 def support_synnaphtha():
@@ -1565,8 +1565,8 @@ def synnaphtha_investment():
     depends_on={
         "synnaphtha_h2_subsidy": 1,
         "synnaphtha_bid_share": 1,
-        "naphtha_equalizer": 1,
         "synnaphtha_level": 1,
+        "naphtha_equalizer": 1,
     },
 )
 def synnaphtha_investment_share():

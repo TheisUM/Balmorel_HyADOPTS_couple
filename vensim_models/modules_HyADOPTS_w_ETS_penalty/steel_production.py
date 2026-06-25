@@ -10,10 +10,10 @@ Translated using PySD version 3.14.3
     comp_subtype="Normal",
     depends_on={
         "bf_bof_cost": 1,
-        "bf_coal_emission_factor": 1,
         "cc_capture_rate": 1,
         "carbon_tax": 1,
         "ccs_cost": 1,
+        "bf_coal_emission_factor": 1,
     },
 )
 def bf_bof_ccs_cost():
@@ -29,18 +29,18 @@ def bf_bof_ccs_cost():
     comp_subtype="Normal",
     depends_on={
         "steel_excess_emissions": 1,
-        "bf_coal_emission_factor": 2,
         "carbon_tax_w_penalty": 1,
+        "bf_coal_emission_factor": 2,
         "carbon_tax": 1,
         "coal_price": 1,
-        "coal_lhv": 1,
         "coal_to_steel": 1,
+        "coal_lhv": 1,
         "grid_electricity_price": 1,
         "el_to_steel_bf_coal": 1,
+        "inflation_lookup": 1,
+        "foundry_af": 1,
         "foundry_operating_hours": 1,
         "bf_coal_capex": 1,
-        "foundry_af": 1,
-        "inflation_lookup": 1,
     },
 )
 def bf_bof_cost():
@@ -69,10 +69,10 @@ def bf_bof_cost():
     comp_subtype="Normal",
     depends_on={
         "bf_bof_cost": 1,
+        "inflation_lookup": 1,
+        "foundry_af": 1,
         "foundry_operating_hours": 1,
         "bf_coal_capex": 1,
-        "foundry_af": 1,
-        "inflation_lookup": 1,
     },
 )
 def bf_bof_cost_marginal():
@@ -98,10 +98,10 @@ def bf_coal_capex():
     comp_subtype="Normal",
     depends_on={
         "bf_bof_cost": 1,
-        "el_to_steel_bf_coal": 1,
-        "bf_coal_emission_factor": 1,
-        "electricity_emission_factor": 1,
         "carbon_tax": 1,
+        "electricity_emission_factor": 1,
+        "bf_coal_emission_factor": 1,
+        "el_to_steel_bf_coal": 1,
     },
 )
 def bf_coal_cost_without_co2():
@@ -320,8 +320,8 @@ def h2dri_cost():
         "grid_electricity_price": 1,
         "el_to_steel_h2dri": 1,
         "h2dri_capex_subsidy": 1,
-        "h2dri_capex": 1,
         "foundry_operating_hours": 1,
+        "h2dri_capex": 1,
     },
 )
 def h2dri_cost_without_h2():
@@ -395,13 +395,13 @@ def ngdri_capex():
     depends_on={
         "carbon_tax": 1,
         "ngdri_emission_factor": 1,
-        "gas_to_steel": 1,
         "gas_price": 1,
-        "grid_electricity_price": 1,
+        "gas_to_steel": 1,
         "el_to_steel_ngdri": 1,
+        "grid_electricity_price": 1,
         "ngdri_capex": 1,
-        "foundry_operating_hours": 1,
         "foundry_af": 1,
+        "foundry_operating_hours": 1,
         "inflation_lookup": 1,
     },
 )
@@ -441,8 +441,8 @@ def ngdri_emission_factor():
     depends_on={
         "h2dri_cost": 1,
         "bf_coal_cost_without_co2": 1,
-        "bf_coal_emission_factor": 1,
         "electricity_emission_factor": 1,
+        "bf_coal_emission_factor": 1,
         "el_to_steel_bf_coal": 1,
     },
 )
@@ -463,8 +463,8 @@ def steel_co2_wtp():
     comp_subtype="Normal",
     depends_on={
         "bf_bof_cost": 1,
-        "el_to_steel_h2dri": 1,
         "renewable_electricity_price": 1,
+        "el_to_steel_h2dri": 1,
         "h2_to_steel": 1,
     },
 )

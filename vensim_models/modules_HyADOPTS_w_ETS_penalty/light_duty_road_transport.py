@@ -61,7 +61,7 @@ _initial_initial_ld_emissions = Initial(
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_ld_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_ld_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def ld_allocated_emissions():
     return initial_ld_emissions() * emissions_cap_lookup(time())
@@ -75,10 +75,10 @@ def ld_allocated_emissions():
     depends_on={
         "ld_bev_sector_share": 1,
         "ld_be_lco": 1,
-        "ld_fcev_sector_share": 1,
         "ld_fc_lco": 1,
-        "ld_fossil_sector_share": 1,
+        "ld_fcev_sector_share": 1,
         "ld_ice_lco": 1,
+        "ld_fossil_sector_share": 1,
         "diesel_lhv": 1,
         "ld_ice_energy_usage": 1,
     },
@@ -318,8 +318,8 @@ def ld_bev_sector_share():
     depends_on={
         "ld_forecast_demand": 1,
         "sum_ld_decommissioning": 1,
-        "car_procurement_time": 1,
         "ld_backlog": 1,
+        "car_procurement_time": 1,
         "sum_ld_activity": 1,
         "innovators": 1,
     },
@@ -367,8 +367,8 @@ def ld_effective_cost():
     comp_subtype="Normal",
     depends_on={
         "ld_fcev_h2_subsidy": 1,
-        "ld_fcev_bid_share": 1,
         "ld_bev_level": 2,
+        "ld_fcev_bid_share": 1,
         "ld_fossil_level": 2,
         "ld_fcev_level": 1,
     },
@@ -640,8 +640,8 @@ def ld_fcev_investment():
     depends_on={
         "ld_fcev_h2_subsidy": 1,
         "ld_fcev_bid_share": 1,
-        "ld_equalizer": 1,
         "ld_fcev_level": 1,
+        "ld_equalizer": 1,
     },
 )
 def ld_fcev_investment_share():
@@ -908,9 +908,9 @@ def ld_fossil_early_decommissioning():
     comp_subtype="Normal",
     depends_on={
         "ld_fossil_cost_difference": 2,
-        "slope_decom": 1,
-        "ld_fossil": 1,
         "car_lifetime": 1,
+        "ld_fossil": 1,
+        "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
     },

@@ -121,9 +121,9 @@ def aec_opex():
         "green_h2_cost": 1,
         "grey_h2_cost": 1,
         "grey_h2_cost_wo_co2": 1,
+        "cc_capture_rate": 2,
         "ccs_cost": 1,
         "smr_emission_factor": 2,
-        "cc_capture_rate": 2,
     },
 )
 def blue_h2_co2_wtp():
@@ -167,8 +167,8 @@ def blue_h2_cost_wo_co2():
     depends_on={
         "smr_el_usage": 1,
         "electricity_emission_factor": 1,
-        "smr_emission_factor": 1,
         "cc_capture_rate": 1,
+        "smr_emission_factor": 1,
     },
 )
 def blue_h2_ef():
@@ -182,7 +182,7 @@ def blue_h2_ef():
     units="€/kgH2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"smr_h2_fixed_costs": 1, "smr_emission_factor": 1, "ccs_capex": 1},
+    depends_on={"smr_h2_fixed_costs": 1, "ccs_capex": 1, "smr_emission_factor": 1},
 )
 def blue_h2_fixed_costs():
     return smr_h2_fixed_costs() + smr_emission_factor() / 1000 * ccs_capex()
@@ -458,8 +458,8 @@ def grey_h2_co2_wtp():
     comp_subtype="Normal",
     depends_on={
         "refinery_excess_activity": 1,
-        "grey_h2_ef": 2,
         "carbon_tax_w_penalty": 1,
+        "grey_h2_ef": 2,
         "carbon_tax": 1,
         "grey_h2_cost_wo_co2": 1,
     },
@@ -485,9 +485,9 @@ def grey_h2_cost():
     comp_subtype="Normal",
     depends_on={
         "grey_h2_cost": 1,
+        "smr_capex": 1,
         "smr_capacity_factor": 1,
         "smr_af": 1,
-        "smr_capex": 1,
     },
 )
 def grey_h2_cost_marginal():
@@ -683,8 +683,8 @@ def smr_h2_fixed_costs():
     depends_on={
         "gas_price": 1,
         "smr_ng_usage": 1,
-        "grid_electricity_price": 1,
         "smr_el_usage": 1,
+        "grid_electricity_price": 1,
     },
 )
 def smr_h2_variable_costs():

@@ -789,9 +789,9 @@ _delayfixed_grey_refinery_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "grey_h2_cost_difference": 2,
-        "slope_decom": 1,
         "grey_refinery": 1,
         "smr_lifetime": 1,
+        "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
@@ -943,7 +943,7 @@ _initial_initial_refinery_emissions = Initial(
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_refinery_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_refinery_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def refinery_allocated_emissions():
     return initial_refinery_emissions() * emissions_cap_lookup(time())
@@ -957,8 +957,8 @@ def refinery_allocated_emissions():
     depends_on={
         "blue_refinery_sector_share": 1,
         "blue_h2_cost": 1,
-        "refinery_h2_cost": 1,
         "green_refinery_sector_share": 1,
+        "refinery_h2_cost": 1,
         "grey_refinery_sector_share": 1,
         "grey_h2_cost": 1,
     },
@@ -1090,9 +1090,9 @@ def refinery_emissions():
     comp_subtype="Normal",
     depends_on={
         "refinery_h2_subsidy": 1,
+        "blue_refinery_level": 2,
         "green_refinery_bid_share": 1,
         "grey_refinery_level": 2,
-        "blue_refinery_level": 2,
         "green_refinery_level": 1,
     },
 )
@@ -1463,8 +1463,8 @@ def sum_refinery_decommissioning():
     comp_subtype="Normal",
     depends_on={
         "subsidized_green_refinery_investment": 1,
-        "refinery_h2_subsidy": 1,
         "green_h2_subsidy": 1,
+        "refinery_h2_subsidy": 1,
     },
 )
 def support_green_refinery():

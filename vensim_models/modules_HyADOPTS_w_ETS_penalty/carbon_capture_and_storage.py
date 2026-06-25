@@ -53,8 +53,8 @@ def carbon_storage_opex():
     comp_subtype="Normal",
     depends_on={
         "ct_distance": 1,
-        "ct_opex": 1,
         "ct_af": 1,
+        "ct_opex": 1,
         "ct_capex": 1,
         "ct_capacity_factor": 1,
     },
@@ -370,7 +370,7 @@ def heat_cost():
     units="€/tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"cc_capex": 1, "cc_capacity_factor": 1, "cc_af": 1, "cc_fixed_opex": 1},
+    depends_on={"cc_capex": 1, "cc_capacity_factor": 1, "cc_fixed_opex": 1, "cc_af": 1},
 )
 def ps_cc_capex():
     return (

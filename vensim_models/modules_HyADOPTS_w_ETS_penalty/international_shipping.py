@@ -206,9 +206,9 @@ _delayfixed_hfo_is_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "hfo_is_cost_difference": 2,
-        "slope_decom": 1,
         "containership_lifetime": 1,
         "hfo_is": 1,
+        "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
@@ -348,8 +348,8 @@ _initial_initial_is_emissions = Initial(
     depends_on={
         "hfo_is_sector_share": 1,
         "hfo_containership_cost": 1,
-        "meoh_containership_cost": 1,
         "meoh_is_sector_share": 1,
+        "meoh_containership_cost": 1,
         "nh3_is_sector_share": 1,
         "nh3_containership_cost": 1,
         "yearly_containership_consumption": 1,
@@ -450,8 +450,8 @@ def international_shipping_nh3_hydrogen_demand():
     comp_subtype="Normal",
     depends_on={
         "initial_is_emissions": 1,
-        "time": 1,
         "shipping_relative_emissions_reduction_lookup": 1,
+        "time": 1,
     },
 )
 def is_allocated_emissions():
@@ -518,7 +518,7 @@ def is_continuous_investment():
     units="GWh",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"fuel_use_index": 1, "time": 1, "is_projected_demand": 1},
+    depends_on={"fuel_use_index": 1, "is_projected_demand": 1, "time": 1},
 )
 def is_current_demand():
     return fuel_use_index() * is_projected_demand(time())
@@ -542,11 +542,11 @@ def is_effective_cost():
     comp_subtype="Normal",
     depends_on={
         "meoh_is_h2_subsidy": 1,
-        "hfo_is_level": 4,
-        "meoh_is_bid_share": 2,
-        "nh3_is_bid_share": 2,
-        "nh3_is_level": 2,
         "nh3_is_h2_subsidy": 2,
+        "nh3_is_bid_share": 2,
+        "meoh_is_bid_share": 2,
+        "nh3_is_level": 2,
+        "hfo_is_level": 4,
         "meoh_is_level": 2,
     },
 )
@@ -828,8 +828,8 @@ _hardcodedlookup_is_projected_demand = HardcodedLookups(
     comp_subtype="Normal",
     depends_on={
         "hfo_containership_cost": 1,
-        "containership_opex": 1,
         "meoh_ship_capex": 1,
+        "containership_opex": 1,
         "ship_engine_af": 1,
         "yearly_containership_consumption": 1,
         "biomeoh_cost_without_h2": 1,
@@ -1018,8 +1018,8 @@ _delayfixed_meoh_is_decommissioning_subsidy_level = DelayFixed(
     depends_on={"_smooth_meoh_is_desired_investment": 1},
     other_deps={
         "_smooth_meoh_is_desired_investment": {
-            "initial": {"meoh_is_level": 2, "nh3_is_level": 1, "hfo_is_level": 1},
-            "step": {"meoh_is_level": 2, "nh3_is_level": 1, "hfo_is_level": 1},
+            "initial": {"meoh_is_level": 2, "hfo_is_level": 1, "nh3_is_level": 1},
+            "step": {"meoh_is_level": 2, "hfo_is_level": 1, "nh3_is_level": 1},
         }
     },
 )
@@ -1112,8 +1112,8 @@ def meoh_is_investment():
     depends_on={
         "meoh_is_h2_subsidy": 1,
         "meoh_is_bid_share": 1,
-        "is_equalizer": 1,
         "meoh_is_level": 1,
+        "is_equalizer": 1,
     },
 )
 def meoh_is_investment_share():
@@ -1199,8 +1199,8 @@ def min_green_containership_cost():
     comp_subtype="Normal",
     depends_on={
         "hfo_containership_cost": 1,
-        "containership_opex": 1,
         "ship_engine_af": 1,
+        "containership_opex": 1,
         "nh3_ship_capex": 1,
         "yearly_containership_consumption": 1,
         "green_nh3_cost_without_h2": 1,
@@ -1389,8 +1389,8 @@ _delayfixed_nh3_is_decommissioning_subsidy_level = DelayFixed(
     depends_on={"_smooth_nh3_is_desired_investment": 1},
     other_deps={
         "_smooth_nh3_is_desired_investment": {
-            "initial": {"nh3_is_level": 2, "meoh_is_level": 1, "hfo_is_level": 1},
-            "step": {"nh3_is_level": 2, "meoh_is_level": 1, "hfo_is_level": 1},
+            "initial": {"nh3_is_level": 2, "hfo_is_level": 1, "meoh_is_level": 1},
+            "step": {"nh3_is_level": 2, "hfo_is_level": 1, "meoh_is_level": 1},
         }
     },
 )
@@ -1559,9 +1559,9 @@ _integ_nh3_is_subsidy_cost = Integ(
     comp_subtype="Normal",
     depends_on={
         "eu_reference_value": 1,
-        "time": 1,
-        "shipping_relative_emissions_reduction_lookup": 1,
         "hard_regulation": 1,
+        "shipping_relative_emissions_reduction_lookup": 1,
+        "time": 1,
     },
 )
 def shipping_current_emissions_cap():
@@ -1823,8 +1823,8 @@ def support_meoh_is():
     comp_subtype="Normal",
     depends_on={
         "subsidized_nh3_is_investment": 1,
-        "green_h2_subsidy": 1,
         "nh3_is_h2_subsidy": 1,
+        "green_h2_subsidy": 1,
     },
 )
 def support_nh3_is():

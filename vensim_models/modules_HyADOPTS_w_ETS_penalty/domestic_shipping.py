@@ -11,12 +11,12 @@ Translated using PySD version 3.14.3
     depends_on={
         "hfo_ds_sector_share": 1,
         "hfo_ship_cost": 1,
-        "meoh_ship_cost": 1,
         "meoh_ds_sector_share": 1,
-        "be_ship_cost": 1,
+        "meoh_ship_cost": 1,
         "electric_ds_sector_share": 1,
-        "fc_ship_cost": 1,
+        "be_ship_cost": 1,
         "h2fc_ds_sector_share": 1,
+        "fc_ship_cost": 1,
         "yearly_hfo_consumption": 1,
     },
 )
@@ -106,8 +106,8 @@ def domestic_shipping_meoh_hydrogen_demand():
     comp_subtype="Normal",
     depends_on={
         "initial_ds_emissions": 1,
-        "time": 1,
         "shipping_relative_emissions_reduction_lookup": 1,
+        "time": 1,
     },
 )
 def ds_allocated_emissions():
@@ -174,7 +174,7 @@ def ds_continuous_investment():
     units="GWh",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"fuel_use_index": 1, "time": 1, "ds_projected_demand": 1},
+    depends_on={"fuel_use_index": 1, "ds_projected_demand": 1, "time": 1},
 )
 def ds_current_demand():
     return fuel_use_index() * ds_projected_demand(time())
@@ -198,12 +198,12 @@ def ds_effective_cost():
     comp_subtype="Normal",
     depends_on={
         "meoh_ds_h2_subsidy": 1,
-        "electric_ds_level": 4,
-        "h2fc_ds_level": 2,
-        "h2fc_ds_h2_subsidy": 2,
         "hfo_ds_level": 4,
         "h2fc_ds_bid_share": 2,
         "meoh_ds_bid_share": 2,
+        "h2fc_ds_level": 2,
+        "electric_ds_level": 4,
+        "h2fc_ds_h2_subsidy": 2,
         "meoh_ds_level": 2,
     },
 )
@@ -535,8 +535,8 @@ def electric_ds_commissioning():
     depends_on={
         "fc_ship_cost": 1,
         "be_ship_cost": 3,
-        "hfo_ship_cost": 1,
         "meoh_ship_cost": 1,
+        "hfo_ship_cost": 1,
     },
 )
 def electric_ds_competitiveness():
@@ -782,8 +782,8 @@ _delayfixed_h2fc_ds_commissioning_subsidy_level = DelayFixed(
     depends_on={
         "meoh_ship_cost": 1,
         "fc_ship_cost": 3,
-        "hfo_ship_cost": 1,
         "be_ship_cost": 1,
+        "hfo_ship_cost": 1,
     },
 )
 def h2fc_ds_competitiveness():
@@ -979,8 +979,8 @@ def h2fc_ds_investment():
     depends_on={
         "h2fc_ds_h2_subsidy": 1,
         "h2fc_ds_bid_share": 1,
-        "h2fc_ds_level": 1,
         "ds_equalizer": 1,
+        "h2fc_ds_level": 1,
     },
 )
 def h2fc_ds_investment_share():
@@ -1029,8 +1029,8 @@ def h2fc_ds_sector_share():
             "step": {
                 "h2fc_ds_commissioning_subsidy_level": 1,
                 "subsidized_h2fc_ds_commissioning": 1,
-                "h2fc_ds_decommissioning_subsidy_level": 1,
                 "subsidized_h2fc_ds_decommissioning": 1,
+                "h2fc_ds_decommissioning_subsidy_level": 1,
             },
         }
     },
@@ -1096,8 +1096,8 @@ def hfo_ds_commissioning():
     depends_on={
         "fc_ship_cost": 1,
         "hfo_ship_cost": 3,
-        "be_ship_cost": 1,
         "meoh_ship_cost": 1,
+        "be_ship_cost": 1,
     },
 )
 def hfo_ds_competitiveness():
@@ -1219,10 +1219,10 @@ _delayfixed_hfo_ds_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "hfo_ds_cost_difference": 2,
+        "intersec_decom": 1,
+        "ship_lifetime": 1,
         "slope_decom": 1,
         "hfo_ds": 1,
-        "ship_lifetime": 1,
-        "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
 )
@@ -1432,8 +1432,8 @@ _delayfixed_meoh_ds_commissioning_subsidy_level = DelayFixed(
     depends_on={
         "fc_ship_cost": 1,
         "meoh_ship_cost": 3,
-        "hfo_ship_cost": 1,
         "be_ship_cost": 1,
+        "hfo_ship_cost": 1,
     },
 )
 def meoh_ds_competitiveness():
@@ -1525,14 +1525,14 @@ _delayfixed_meoh_ds_decommissioning_subsidy_level = DelayFixed(
             "initial": {
                 "meoh_ds_level": 2,
                 "hfo_ds_level": 1,
-                "electric_ds_level": 1,
                 "h2fc_ds_level": 1,
+                "electric_ds_level": 1,
             },
             "step": {
                 "meoh_ds_level": 2,
                 "hfo_ds_level": 1,
-                "electric_ds_level": 1,
                 "h2fc_ds_level": 1,
+                "electric_ds_level": 1,
             },
         }
     },
@@ -1628,8 +1628,8 @@ def meoh_ds_investment():
     depends_on={
         "meoh_ds_h2_subsidy": 1,
         "meoh_ds_bid_share": 1,
-        "meoh_ds_level": 1,
         "ds_equalizer": 1,
+        "meoh_ds_level": 1,
     },
 )
 def meoh_ds_investment_share():
@@ -1679,8 +1679,8 @@ def meoh_ds_sector_share():
             "step": {
                 "meoh_ds_commissioning_subsidy_level": 1,
                 "subsidized_meoh_ds_commissioning": 1,
-                "meoh_ds_decommissioning_subsidy_level": 1,
                 "subsidized_meoh_ds_decommissioning": 1,
+                "meoh_ds_decommissioning_subsidy_level": 1,
             },
         }
     },
@@ -1731,7 +1731,7 @@ def meoh_ship_h2_wtp():
     units="M€/Year",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"be_ship_cost": 1, "fc_ship_cost": 1, "meoh_ship_cost": 1},
+    depends_on={"be_ship_cost": 1, "meoh_ship_cost": 1, "fc_ship_cost": 1},
 )
 def min_green_ship_cost():
     return float(

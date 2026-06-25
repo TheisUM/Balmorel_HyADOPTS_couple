@@ -11,8 +11,8 @@ Translated using PySD version 3.14.3
     depends_on={
         "blue_ng_cost_wo_co2": 1,
         "cc_capture_rate": 1,
-        "carbon_tax": 1,
         "gas_emission_factor": 1,
+        "carbon_tax": 1,
     },
 )
 def blue_ng_cost():
@@ -78,8 +78,8 @@ def diesel_lhv():
     depends_on={
         "diesel_cost_wo_co2": 1,
         "diesel_emission_factor": 1,
-        "diesel_lhv": 1,
         "carbon_tax": 1,
+        "diesel_lhv": 1,
     },
 )
 def diesel_price():
@@ -158,8 +158,8 @@ def grey_ng_cost():
     depends_on={
         "is_excess_activity": 1,
         "ds_excess_activity": 1,
-        "hfo_emission_factor": 2,
         "carbon_tax_w_penalty": 1,
+        "hfo_emission_factor": 2,
         "carbon_tax": 1,
         "oil_price": 1,
     },
@@ -281,8 +281,8 @@ def methane_lhv():
     comp_subtype="Normal",
     depends_on={
         "naphtha_excess_activity": 1,
-        "naphtha_emission_factor": 2,
         "carbon_tax_w_penalty": 1,
+        "naphtha_emission_factor": 2,
         "carbon_tax": 1,
         "naphtha_cost_wo_co2": 1,
     },

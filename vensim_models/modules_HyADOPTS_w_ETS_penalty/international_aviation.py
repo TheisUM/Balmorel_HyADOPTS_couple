@@ -185,13 +185,13 @@ _delayfixed_biokero_ia_decommissioning_subsidy_level = DelayFixed(
         "_smooth_biokero_ia_desired_investment": {
             "initial": {
                 "biokero_ia_level": 2,
-                "synkero_ia_level": 1,
                 "jetfuel_ia_level": 1,
+                "synkero_ia_level": 1,
             },
             "step": {
                 "biokero_ia_level": 2,
-                "synkero_ia_level": 1,
                 "jetfuel_ia_level": 1,
+                "synkero_ia_level": 1,
             },
         }
     },
@@ -370,8 +370,8 @@ def biokero_ia_sector_share():
             "step": {
                 "biokero_ia_commissioning_subsidy_level": 1,
                 "subsidized_biokero_ia_commissioning": 1,
-                "biokero_ia_decommissioning_subsidy_level": 1,
                 "subsidized_biokero_ia_decommissioning": 1,
+                "biokero_ia_decommissioning_subsidy_level": 1,
             },
         }
     },
@@ -395,7 +395,7 @@ _integ_biokero_ia_subsidy_cost = Integ(
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_ia_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_ia_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def ia_allocated_emissions():
     return initial_ia_emissions() * emissions_cap_lookup(time())
@@ -485,8 +485,8 @@ def ia_effective_cost():
     comp_subtype="Normal",
     depends_on={
         "biokero_h2_subsidy": 1,
-        "synkero_h2_subsidy": 2,
         "biokero_ia_bid_share": 2,
+        "synkero_h2_subsidy": 2,
         "jetfuel_ia_level": 4,
         "synkero_ia_bid_share": 2,
         "synkero_ia_level": 2,
@@ -792,8 +792,8 @@ _initial_initial_ia_emissions = Initial(
     depends_on={
         "biokero_ia_sector_share": 1,
         "biokero_cost": 1,
-        "jetfuel_ia_sector_share": 1,
         "jetfuel_cost": 1,
+        "jetfuel_ia_sector_share": 1,
         "synkero_ia_sector_share": 1,
         "synkero_cost": 1,
     },
@@ -1079,10 +1079,10 @@ _delayfixed_jetfuel_ia_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "jetfuel_cost_difference": 2,
-        "slope_decom": 1,
         "jetfuel_lockin_period": 1,
-        "intersec_decom": 1,
         "jetfuel_ia": 1,
+        "slope_decom": 1,
+        "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
 )
@@ -1460,8 +1460,8 @@ def sum_ia_decommissioning():
     comp_subtype="Normal",
     depends_on={
         "subsidized_biokero_ia_investment": 1,
-        "biokero_h2_subsidy": 1,
         "green_h2_subsidy": 1,
+        "biokero_h2_subsidy": 1,
         "jetfuel_lockin_period": 1,
     },
 )
@@ -1480,8 +1480,8 @@ def support_biokero_ia():
     comp_subtype="Normal",
     depends_on={
         "subsidized_synkero_ia_investment": 1,
-        "synkero_h2_subsidy": 1,
         "green_h2_subsidy": 1,
+        "synkero_h2_subsidy": 1,
         "jetfuel_lockin_period": 1,
     },
 )
@@ -1778,8 +1778,8 @@ def synkero_ia_investment():
     depends_on={
         "synkero_h2_subsidy": 1,
         "synkero_ia_bid_share": 1,
-        "synkero_ia_level": 1,
         "ia_equalizer": 1,
+        "synkero_ia_level": 1,
     },
 )
 def synkero_ia_investment_share():

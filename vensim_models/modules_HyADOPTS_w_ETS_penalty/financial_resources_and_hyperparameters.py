@@ -69,8 +69,8 @@ _hardcodedlookup_biomass_price_lookup = HardcodedLookups(
         "ets": 1,
         "_smooth_carbon_tax": 1,
         "carbon_tax_lookup": 1,
-        "time": 1,
         "carbon_tax_sensitivity": 1,
+        "time": 1,
     },
     other_deps={
         "_smooth_carbon_tax": {

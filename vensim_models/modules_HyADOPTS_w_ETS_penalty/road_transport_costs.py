@@ -118,8 +118,8 @@ def hd_battery_weight():
         "hd_be_powertrain_capex": 1,
         "hd_be_storage_capex": 1,
         "hd_rest_of_vehicle_capex": 1,
-        "hd_scrappage_value": 1,
         "vehicle_insurance": 1,
+        "hd_scrappage_value": 1,
         "hd_af": 1,
         "hd_annual_km": 1,
     },
@@ -172,8 +172,8 @@ def hd_be_om():
     depends_on={
         "hd_be_om": 1,
         "charging_efficiency": 1,
-        "grid_electricity_price": 1,
         "hd_be_energy_usage": 1,
+        "grid_electricity_price": 1,
     },
 )
 def hd_be_opex():
@@ -251,9 +251,9 @@ def hd_bev_ef():
         "hd_fc_lco": 1,
         "hd_be_lco": 1,
         "diesel_emission_factor": 2,
+        "carbon_tax": 1,
         "hd_ice_lco": 1,
         "hd_ice_energy_usage": 2,
-        "carbon_tax": 1,
         "diesel_lhv": 2,
     },
 )
@@ -280,9 +280,9 @@ def hd_co2_wtp():
     comp_subtype="Normal",
     depends_on={
         "hd_fossil_ef": 1,
-        "time": 1,
         "hd_relative_emissions_reduction_lookup": 1,
         "hard_regulation": 1,
+        "time": 1,
     },
 )
 def hd_current_emissions_cap():
@@ -330,8 +330,8 @@ def hd_ev_efficiency():
         "hd_fc_powertrain_capex": 1,
         "hd_fc_storage_capex": 1,
         "hd_rest_of_vehicle_capex": 1,
-        "hd_scrappage_value": 1,
         "vehicle_insurance": 1,
+        "hd_scrappage_value": 1,
         "hd_af": 1,
         "hd_annual_km": 1,
     },
@@ -426,7 +426,7 @@ def hd_fc_storage_capacity():
     units="€",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"rt_battery_cost": 1, "hd_fc_storage_capacity": 1, "h2_lhv": 1},
+    depends_on={"rt_battery_cost": 1, "h2_lhv": 1, "hd_fc_storage_capacity": 1},
 )
 def hd_fc_storage_capex():
     """
@@ -502,8 +502,8 @@ def hd_fossil_fuel_cost():
         "hd_ice_powertrain_capex": 1,
         "hd_ice_storage_capex": 1,
         "hd_rest_of_vehicle_capex": 1,
-        "hd_scrappage_value": 1,
         "vehicle_insurance": 1,
+        "hd_scrappage_value": 1,
         "hd_af": 1,
         "hd_annual_km": 1,
     },
@@ -564,7 +564,7 @@ def hd_ice_om():
     units="€/km",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"hd_ice_om": 1, "hd_ice_energy_usage": 1, "hd_fossil_fuel_cost": 1},
+    depends_on={"hd_ice_om": 1, "hd_fossil_fuel_cost": 1, "hd_ice_energy_usage": 1},
 )
 def hd_ice_opex():
     return hd_ice_om() + hd_ice_energy_usage() * hd_fossil_fuel_cost()
@@ -720,8 +720,8 @@ def ld_annual_km():
         "ld_be_storage_capex": 1,
         "ld_rest_of_vehicle_capex": 1,
         "ld_af": 1,
-        "vehicle_insurance": 1,
         "ld_scrappage_value": 1,
+        "vehicle_insurance": 1,
         "ld_annual_km": 1,
     },
 )
@@ -842,10 +842,10 @@ def ld_bev_ef():
         "ld_fc_lco": 1,
         "ld_be_lco": 1,
         "diesel_emission_factor": 2,
-        "ld_ice_lco": 1,
-        "ld_ice_energy_usage": 2,
         "carbon_tax": 1,
+        "ld_ice_lco": 1,
         "diesel_lhv": 2,
+        "ld_ice_energy_usage": 2,
     },
 )
 def ld_co2_wtp():
@@ -941,8 +941,8 @@ def ld_ev_efficiency():
         "ld_fc_storage_capex": 1,
         "ld_rest_of_vehicle_capex": 1,
         "ld_af": 1,
-        "vehicle_insurance": 1,
         "ld_scrappage_value": 1,
+        "vehicle_insurance": 1,
         "ld_annual_km": 1,
     },
 )
@@ -991,8 +991,8 @@ def ld_fc_engine_capex():
     comp_subtype="Normal",
     depends_on={
         "ld_fc_lco_without_h2": 1,
-        "ld_fcev_h2_cost": 1,
         "ld_fc_energy_usage": 1,
+        "ld_fcev_h2_cost": 1,
     },
 )
 def ld_fc_lco():
@@ -1042,8 +1042,8 @@ def ld_fc_storage_capacity():
     depends_on={
         "ld_fc_storage_capacity": 2,
         "h2_tank_cost": 1,
-        "rt_battery_cost": 1,
         "h2_lhv": 1,
+        "rt_battery_cost": 1,
     },
 )
 def ld_fc_storage_capex():
@@ -1124,8 +1124,8 @@ def ld_fossil_fuel_cost():
         "ld_ice_storage_capex": 1,
         "ld_rest_of_vehicle_capex": 1,
         "ld_af": 1,
-        "vehicle_insurance": 1,
         "ld_scrappage_value": 1,
+        "vehicle_insurance": 1,
         "ld_annual_km": 1,
     },
 )
@@ -1191,7 +1191,7 @@ def ld_ice_om():
     units="€/km",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"ld_ice_om": 1, "ld_ice_energy_usage": 1, "ld_fossil_fuel_cost": 1},
+    depends_on={"ld_ice_om": 1, "ld_fossil_fuel_cost": 1, "ld_ice_energy_usage": 1},
 )
 def ld_ice_opex():
     return ld_ice_om() + ld_ice_energy_usage() * ld_fossil_fuel_cost()

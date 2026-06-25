@@ -134,7 +134,6 @@ def write_fuel_demand(model_results:pd.DataFrame,
     # 5) Naphtha
     Chemicals = results["naphtha"]
     Chemicals = Chemicals * 13.44
-    # print(Chemicals.iloc[-1,0])
 
     Total_synthetic_naphtha = Chemicals.iloc[:,1]
     Total_bio_naphtha = Chemicals.iloc[:,2]
@@ -421,8 +420,6 @@ def write_heat_demand(model_results: pd.DataFrame,
     heat_HT = results["high temperature"].iloc[:, :3]
     heat_HT = heat_HT[heat_HT.index.isin(model_years)]
 
-    print(heat_HT)
-
     return heat_HT
 
 def write_electricity_demand(model_results: pd.DataFrame,
@@ -561,7 +558,6 @@ def write_electrolyzer_capex(model_results: pd.DataFrame,
     Returns:
     - IncFile with the electrolyzer CAPEX results for the chosen years.
     """
-
     # Step 1: Read the model results DataFrame and extract the relevant columns
     # Electrolyzer CAPEX from different sectors
     electrolyzer_CAPEX = model_results["AEC CAPEX"] / 1000 # M€/MW_el
@@ -583,8 +579,8 @@ def write_electrolyzer_capex(model_results: pd.DataFrame,
     investment_cost_index = ["GDINVCOST0"]
 
     hydrogen_data.loc[aec_technologies, investment_cost_index] = electrolyzer_CAPEX.values
-
-    hydrogen_data.fillna('', inplace=True)
+    
+    hydrogen_data.fillna(0, inplace=True)
 
     filename = "HYDROGEN_GDATA"
 

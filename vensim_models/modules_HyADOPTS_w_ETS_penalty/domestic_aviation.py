@@ -370,7 +370,7 @@ _integ_biokero_da_subsidy_cost = Integ(
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_da_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_da_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def da_allocated_emissions():
     return initial_da_emissions() * emissions_cap_lookup(time())
@@ -408,8 +408,8 @@ _integ_da_backlog = Integ(
     depends_on={
         "da_forecast_demand": 1,
         "sum_da_decommissioning": 1,
-        "da_backlog": 1,
         "da_fuel_switch_time": 1,
+        "da_backlog": 1,
         "sum_da_activity": 1,
         "sum_da_extra_investment": 1,
         "innovators": 1,
@@ -460,11 +460,11 @@ def da_effective_cost():
     comp_subtype="Normal",
     depends_on={
         "biokero_h2_subsidy": 1,
+        "synkero_da_bid_share": 2,
         "synkero_h2_subsidy": 2,
+        "jetfuel_da_level": 4,
         "biokero_da_bid_share": 2,
         "synkero_da_level": 2,
-        "jetfuel_da_level": 4,
-        "synkero_da_bid_share": 2,
         "biokero_da_level": 2,
     },
 )
@@ -757,10 +757,10 @@ _hardcodedlookup_da_projected_demand = HardcodedLookups(
     depends_on={
         "biokero_cost": 1,
         "biokero_da_sector_share": 1,
-        "jetfuel_da_sector_share": 1,
         "jetfuel_cost": 1,
-        "synkero_cost": 1,
+        "jetfuel_da_sector_share": 1,
         "synkero_da_sector_share": 1,
+        "synkero_cost": 1,
     },
 )
 def domestic_aviation_average_cost():
@@ -1027,9 +1027,9 @@ _delayfixed_jetfuel_da_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "jetfuel_cost_difference": 2,
-        "slope_decom": 1,
         "jetfuel_da": 1,
         "jetfuel_lockin_period": 1,
+        "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
@@ -1383,8 +1383,8 @@ def sum_da_extra_investment():
     comp_subtype="Normal",
     depends_on={
         "subsidized_biokero_da_investment": 1,
-        "biokero_h2_subsidy": 1,
         "green_h2_subsidy": 1,
+        "biokero_h2_subsidy": 1,
         "jetfuel_lockin_period": 1,
     },
 )
@@ -1403,8 +1403,8 @@ def support_biokero_da():
     comp_subtype="Normal",
     depends_on={
         "subsidized_synkero_da_investment": 1,
-        "synkero_h2_subsidy": 1,
         "green_h2_subsidy": 1,
+        "synkero_h2_subsidy": 1,
         "jetfuel_lockin_period": 1,
     },
 )
@@ -1756,8 +1756,8 @@ def synkero_da_sector_share():
             "step": {
                 "synkero_da_commissioning_subsidy_level": 1,
                 "subsidized_synkero_da_commissioning": 1,
-                "subsidized_synkero_da_decommissioning": 1,
                 "synkero_da_decommissioning_subsidy_level": 1,
+                "subsidized_synkero_da_decommissioning": 1,
             },
         }
     },

@@ -302,8 +302,8 @@ def biomeoh_investment():
     depends_on={
         "biomeoh_h2_subsidy": 1,
         "biomeoh_bid_share": 1,
-        "biomeoh_level": 1,
         "equalizer_meoh": 1,
+        "biomeoh_level": 1,
     },
 )
 def biomeoh_investment_share():
@@ -479,8 +479,8 @@ def blue_meoh_decommissioning():
     depends_on={
         "electricity_emission_factor": 1,
         "convmeoh_electricity_usage": 1,
-        "convmeoh_emission_factor": 1,
         "cc_capture_rate": 1,
+        "convmeoh_emission_factor": 1,
     },
 )
 def blue_meoh_ef():
@@ -758,15 +758,15 @@ _delayfixed_emeoh_decommissioning_subsidy_level = DelayFixed(
         "_smooth_emeoh_desired_investment": {
             "initial": {
                 "emeoh_level": 2,
+                "blue_meoh_level": 1,
                 "biomeoh_level": 1,
                 "grey_meoh_level": 1,
-                "blue_meoh_level": 1,
             },
             "step": {
                 "emeoh_level": 2,
+                "blue_meoh_level": 1,
                 "biomeoh_level": 1,
                 "grey_meoh_level": 1,
-                "blue_meoh_level": 1,
             },
         }
     },
@@ -918,8 +918,8 @@ def emeoh_sector_share():
             "step": {
                 "emeoh_commissioning_subsidy_level": 1,
                 "subsidized_emeoh_commissioning": 1,
-                "emeoh_decommissioning_subsidy_level": 1,
                 "subsidized_emeoh_decommissioning": 1,
+                "emeoh_decommissioning_subsidy_level": 1,
             },
         }
     },
@@ -942,12 +942,12 @@ _integ_emeoh_subsidy_cost = Integ(
     comp_subtype="Normal",
     depends_on={
         "biomeoh_h2_subsidy": 1,
-        "emeoh_bid_share": 2,
         "blue_meoh_level": 4,
         "biomeoh_bid_share": 2,
-        "grey_meoh_level": 4,
-        "emeoh_h2_subsidy": 2,
         "emeoh_level": 2,
+        "emeoh_h2_subsidy": 2,
+        "emeoh_bid_share": 2,
+        "grey_meoh_level": 4,
         "biomeoh_level": 2,
     },
 )
@@ -1179,9 +1179,9 @@ _delayfixed_grey_meoh_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "grey_meoh_cost_difference": 2,
-        "slope_decom": 1,
-        "grey_meoh": 1,
         "meoh_plant_lifetime": 1,
+        "grey_meoh": 1,
+        "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
@@ -1347,7 +1347,7 @@ _initial_initial_meoh_emissions = Initial(
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_meoh_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_meoh_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def meoh_allocated_emissions():
     return initial_meoh_emissions() * emissions_cap_lookup(time())
@@ -1363,10 +1363,10 @@ def meoh_allocated_emissions():
         "green_biomeoh_cost": 1,
         "blue_meoh_sector_share": 1,
         "blue_meoh_cost": 1,
-        "grey_meoh_sector_share": 1,
         "convmeoh_cost": 1,
-        "green_emeoh_cost": 1,
+        "grey_meoh_sector_share": 1,
         "emeoh_sector_share": 1,
+        "green_emeoh_cost": 1,
     },
 )
 def meoh_average_cost():
@@ -1434,8 +1434,8 @@ def meoh_construction_time():
     depends_on={
         "meoh_forecast_demand": 1,
         "sum_meoh_decommissioning": 1,
-        "meoh_construction_time": 1,
         "meoh_backlog": 1,
+        "meoh_construction_time": 1,
         "sum_meoh_activity": 1,
         "innovators": 1,
     },
@@ -1860,8 +1860,8 @@ def support_biomeoh():
     comp_subtype="Normal",
     depends_on={
         "subsidized_emeoh_investment": 1,
-        "green_h2_subsidy": 1,
         "emeoh_h2_subsidy": 1,
+        "green_h2_subsidy": 1,
     },
 )
 def support_emeoh():

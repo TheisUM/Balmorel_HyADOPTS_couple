@@ -19,7 +19,7 @@ def alternative_hd_cost():
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_hd_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_hd_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def hd_allocated_emissions():
     return initial_hd_emissions() * emissions_cap_lookup(time())
@@ -33,8 +33,8 @@ def hd_allocated_emissions():
     depends_on={
         "hd_bev_sector_share": 1,
         "hd_be_lco": 1,
-        "hd_fcev_sector_share": 1,
         "hd_fc_lco": 1,
+        "hd_fcev_sector_share": 1,
         "hd_fossil_sector_share": 1,
         "hd_ice_lco": 1,
         "diesel_lhv": 1,
@@ -277,8 +277,8 @@ def hd_bev_sector_share():
     depends_on={
         "hd_forecast_demand": 1,
         "sum_hd_decommissioning": 1,
-        "hd_backlog": 1,
         "truck_procurement_time": 1,
+        "hd_backlog": 1,
         "sum_hd_activity": 1,
         "innovators": 1,
     },
@@ -350,9 +350,9 @@ _hardcodedlookup_hd_emissions_cap_lookup = HardcodedLookups(
     comp_subtype="Normal",
     depends_on={
         "hd_fcev_h2_subsidy": 1,
-        "hd_fcev_bid_share": 1,
-        "hd_bev_level": 2,
         "hd_fossil_level": 2,
+        "hd_bev_level": 2,
+        "hd_fcev_bid_share": 1,
         "hd_fcev_level": 1,
     },
 )
@@ -529,8 +529,8 @@ _delayfixed_hd_fcev_decommissioning_subsidy_level = DelayFixed(
     depends_on={"_smooth_hd_fcev_desired_investment": 1},
     other_deps={
         "_smooth_hd_fcev_desired_investment": {
-            "initial": {"hd_fcev_level": 2, "hd_bev_level": 1, "hd_fossil_level": 1},
-            "step": {"hd_fcev_level": 2, "hd_bev_level": 1, "hd_fossil_level": 1},
+            "initial": {"hd_fcev_level": 2, "hd_fossil_level": 1, "hd_bev_level": 1},
+            "step": {"hd_fcev_level": 2, "hd_fossil_level": 1, "hd_bev_level": 1},
         }
     },
 )
@@ -893,9 +893,9 @@ def hd_fossil_early_decommissioning():
     comp_subtype="Normal",
     depends_on={
         "hd_fossil_cost_difference": 2,
-        "slope_decom": 1,
         "hd_fossil": 1,
         "truck_lifetime": 1,
+        "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
@@ -993,9 +993,9 @@ def hd_fossil_investment_share():
     comp_subtype="Normal",
     depends_on={
         "hard_regulation": 1,
+        "hd_fossil_competitiveness": 2,
         "slope": 2,
         "hd_fossil_sector_share": 2,
-        "hd_fossil_competitiveness": 2,
         "hd_emissions_cap_lookup": 2,
         "time": 2,
         "hd_zero_emission_level": 1,

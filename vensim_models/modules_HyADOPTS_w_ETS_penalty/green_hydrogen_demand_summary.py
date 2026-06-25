@@ -154,8 +154,8 @@ def green_refinery_h2_wtp_gap():
     comp_subtype="Normal",
     depends_on={
         "h2_lhv": 1,
-        "refinery_grey_hydrogen_demand": 1,
         "fertilizer_grey_hydrogen_demand": 1,
+        "refinery_grey_hydrogen_demand": 1,
     },
 )
 def grey_hydrogen_twh():

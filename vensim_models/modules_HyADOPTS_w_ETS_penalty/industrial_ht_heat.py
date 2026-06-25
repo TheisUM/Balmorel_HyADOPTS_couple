@@ -8,7 +8,7 @@ Translated using PySD version 3.14.3
     units="€/GJ",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"biogas_cost": 1, "nm_h2_gj_cost": 1, "blue_ng_cost": 1},
+    depends_on={"biogas_cost": 1, "blue_ng_cost": 1, "nm_h2_gj_cost": 1},
 )
 def alternative_ht_cost():
     return float(
@@ -653,8 +653,8 @@ _delayfixed_grey_ng_nm_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "grey_ng_nm_cost_difference": 2,
-        "grey_ng_nm": 1,
         "gas_lockin_period": 1,
+        "grey_ng_nm": 1,
         "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
@@ -1057,8 +1057,8 @@ def h2_nm_investment():
     depends_on={
         "nm_h2_subsidy": 1,
         "h2_nm_bid_share": 1,
-        "nm_equalizer": 1,
         "h2_nm_level": 1,
+        "nm_equalizer": 1,
     },
 )
 def h2_nm_investment_share():
@@ -1107,8 +1107,8 @@ def h2_nm_sector_share():
             "step": {
                 "h2_nm_commissioning_subsidy_level": 1,
                 "subsidized_h2_nm_commissioning": 1,
-                "h2_nm_decommissioning_subsidy_level": 1,
                 "subsidized_h2_nm_decommissioning": 1,
+                "h2_nm_decommissioning_subsidy_level": 1,
             },
         }
     },
@@ -1132,8 +1132,8 @@ _integ_h2_nm_subsidy_cost = Integ(
     comp_subtype="Normal",
     depends_on={
         "initial_high_temperature_emissions": 1,
-        "time": 1,
         "emissions_cap_lookup": 1,
+        "time": 1,
     },
 )
 def high_temperature_allocated_emissions():
@@ -1148,8 +1148,8 @@ def high_temperature_allocated_emissions():
     depends_on={
         "biogas_cost": 1,
         "biogas_nm_sector_share": 1,
-        "blue_nm_sector_share": 1,
         "blue_ng_cost": 1,
+        "blue_nm_sector_share": 1,
         "grey_nm_sector_share": 1,
         "grey_ng_cost": 1,
         "nm_h2_gj_cost": 1,
@@ -1220,8 +1220,8 @@ def high_temperature_construction_time():
     comp_subtype="Normal",
     depends_on={
         "high_temperature_forecast_demand": 1,
-        "high_temperature_construction_time": 2,
         "sum_high_temperature_decommissioning": 1,
+        "high_temperature_construction_time": 2,
         "high_temperature_backlog": 1,
         "sum_high_temperature_activity": 1,
         "innovators": 1,
@@ -1491,10 +1491,10 @@ _initial_initial_high_temperature_emissions = Initial(
     comp_subtype="Normal",
     depends_on={
         "nm_h2_subsidy": 1,
-        "biogas_nm_level": 2,
         "h2_nm_bid_share": 1,
         "grey_ng_nm_level": 2,
         "blue_ng_nm_level": 2,
+        "biogas_nm_level": 2,
         "h2_nm_level": 1,
     },
 )
@@ -1646,8 +1646,8 @@ def sum_high_temperature_decommissioning():
     comp_subtype="Normal",
     depends_on={
         "subsidized_h2_nm_investment": 1,
-        "green_h2_subsidy": 1,
         "nm_h2_subsidy": 1,
+        "green_h2_subsidy": 1,
         "gas_lockin_period": 1,
     },
 )

@@ -86,8 +86,8 @@ def bf_bof_ccs_commissioning():
     depends_on={
         "ngdri_cost": 1,
         "bf_bof_ccs_cost": 3,
-        "bf_bof_cost": 1,
         "h2dri_cost": 1,
+        "bf_bof_cost": 1,
     },
 )
 def bf_bof_ccs_competitiveness():
@@ -152,8 +152,8 @@ def bf_bof_ccs_decommissioning():
     depends_on={
         "el_to_steel_bf_coal": 1,
         "electricity_emission_factor": 1,
-        "bf_coal_emission_factor": 1,
         "cc_capture_rate": 1,
+        "bf_coal_emission_factor": 1,
     },
 )
 def bf_bof_ccs_ef():
@@ -377,9 +377,9 @@ _delayfixed_bf_bof_delayed = DelayFixed(
     comp_subtype="Normal",
     depends_on={
         "bf_bof_cost_difference": 2,
-        "slope_decom": 1,
         "foundry_lifetime": 1,
         "bf_bof": 1,
+        "slope_decom": 1,
         "intersec_decom": 1,
         "economic_decommissioning": 1,
     },
@@ -644,8 +644,8 @@ _delayfixed_h2dri_eaf_commissioning_subsidy_level = DelayFixed(
     depends_on={
         "ngdri_cost": 1,
         "h2dri_cost": 3,
-        "bf_bof_cost": 1,
         "bf_bof_ccs_cost": 1,
+        "bf_bof_cost": 1,
     },
 )
 def h2dri_eaf_competitiveness():
@@ -993,8 +993,8 @@ def ngdri_eaf_commissioning():
     depends_on={
         "h2dri_cost": 1,
         "ngdri_cost": 3,
-        "bf_bof_cost": 1,
         "bf_bof_ccs_cost": 1,
+        "bf_bof_cost": 1,
     },
 )
 def ngdri_eaf_competitiveness():
@@ -1195,7 +1195,7 @@ def secondary_sector_growth():
     units="tCO2",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"initial_steel_emissions": 1, "time": 1, "emissions_cap_lookup": 1},
+    depends_on={"initial_steel_emissions": 1, "emissions_cap_lookup": 1, "time": 1},
 )
 def steel_allocated_emissions():
     return initial_steel_emissions() * emissions_cap_lookup(time())
@@ -1209,12 +1209,12 @@ def steel_allocated_emissions():
     depends_on={
         "bf_bof_sector_share": 1,
         "bf_bof_cost": 1,
-        "bf_bof_ccs_sector_share": 1,
         "bf_bof_ccs_cost": 1,
+        "bf_bof_ccs_sector_share": 1,
         "h2dri_eaf_sector_share": 1,
         "h2dri_cost": 1,
-        "ngdri_cost": 1,
         "ngdri_eaf_sector_share": 1,
+        "ngdri_cost": 1,
     },
 )
 def steel_average_cost():
@@ -1261,8 +1261,8 @@ _integ_steel_backlog = Integ(
     depends_on={
         "steel_forecast_demand": 1,
         "sum_steel_decommissioning": 1,
-        "foundry_construction_time": 1,
         "steel_backlog": 1,
+        "foundry_construction_time": 1,
         "sum_steel_activity": 1,
         "innovators": 1,
     },
@@ -1334,10 +1334,10 @@ def steel_emissions():
     comp_subtype="Normal",
     depends_on={
         "steel_h2_subsidy": 1,
-        "ngdri_eaf_level": 2,
-        "bf_bof_ccs_level": 2,
         "h2dri_eaf_bid_share": 1,
+        "bf_bof_ccs_level": 2,
         "bf_bof_level": 2,
+        "ngdri_eaf_level": 2,
         "h2dri_eaf_level": 1,
     },
 )

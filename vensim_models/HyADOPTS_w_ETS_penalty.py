@@ -6,15 +6,15 @@ Translated using PySD
 from pathlib import Path
 import numpy as np
 
-from pysd.py_backend.functions import if_then_else, modulo, pulse, step, zidz
+from pysd.py_backend.functions import modulo, zidz, if_then_else, step, pulse
 from pysd.py_backend.statefuls import (
-    Initial,
-    Delay,
     Integ,
     DelayN,
-    Smooth,
-    DelayFixed,
     Forecast,
+    Delay,
+    Smooth,
+    Initial,
+    DelayFixed,
 )
 from pysd.py_backend.lookups import HardcodedLookups
 from pysd.py_backend.utils import load_modules, load_model_data

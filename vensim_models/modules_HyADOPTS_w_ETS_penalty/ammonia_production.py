@@ -29,8 +29,8 @@ def blue_nh3_co2_wtp():
     depends_on={
         "blue_nh3_cost_without_co2": 1,
         "nh3_lhv": 1,
-        "blue_nh3_ef": 1,
         "carbon_tax": 1,
+        "blue_nh3_ef": 1,
     },
 )
 def blue_nh3_cost():
@@ -44,9 +44,9 @@ def blue_nh3_cost():
     comp_subtype="Normal",
     depends_on={
         "grey_nh3_cost_without_h2": 1,
-        "nh3_lhv": 1,
-        "blue_h2_cost_wo_co2": 1,
         "nh3_h2_usage": 1,
+        "blue_h2_cost_wo_co2": 1,
+        "nh3_lhv": 1,
     },
 )
 def blue_nh3_cost_without_co2():
@@ -64,8 +64,8 @@ def blue_nh3_cost_without_co2():
     depends_on={
         "blue_h2_ef": 1,
         "nh3_h2_usage": 1,
-        "nh3_el_usage": 1,
         "electricity_emission_factor": 1,
+        "nh3_el_usage": 1,
     },
 )
 def blue_nh3_ef():
@@ -82,8 +82,8 @@ def blue_nh3_ef():
     depends_on={
         "min_alternative_nh3_cost": 1,
         "green_nh3_cost_without_h2": 1,
-        "nh3_lhv": 1,
         "nh3_h2_usage": 1,
+        "nh3_lhv": 1,
     },
 )
 def fertilizer_h2_wtp():
@@ -101,9 +101,9 @@ def fertilizer_h2_wtp():
     comp_subtype="Normal",
     depends_on={
         "green_nh3_cost_without_h2": 1,
-        "nh3_lhv": 1,
         "nh3_h2_usage": 1,
         "fertilizer_h2_cost": 1,
+        "nh3_lhv": 1,
     },
 )
 def fertilizer_nh3_cost():
@@ -180,8 +180,8 @@ def grey_nh3_co2_wtp():
     depends_on={
         "fertilizer_excess_activity": 1,
         "nh3_lhv": 2,
-        "grey_nh3_ef": 2,
         "carbon_tax_w_penalty": 1,
+        "grey_nh3_ef": 2,
         "carbon_tax": 1,
         "grey_nh3_cost_without_co2": 1,
     },
@@ -205,9 +205,9 @@ def grey_nh3_cost():
     depends_on={
         "grey_nh3_cost": 1,
         "grey_nh3_operating_hours": 1,
-        "nh3_lhv": 1,
-        "nh3_af": 1,
         "nh3_capex": 1,
+        "nh3_af": 1,
+        "nh3_lhv": 1,
     },
 )
 def grey_nh3_cost_marginal():
@@ -224,9 +224,9 @@ def grey_nh3_cost_marginal():
     comp_subtype="Normal",
     depends_on={
         "grey_nh3_cost_without_h2": 1,
+        "nh3_h2_usage": 1,
         "grey_h2_cost_wo_co2": 1,
         "nh3_lhv": 1,
-        "nh3_h2_usage": 1,
     },
 )
 def grey_nh3_cost_without_co2():
@@ -269,8 +269,8 @@ def grey_nh3_cost_without_h2():
     depends_on={
         "grey_h2_ef": 1,
         "nh3_h2_usage": 1,
-        "nh3_el_usage": 1,
         "electricity_emission_factor": 1,
+        "nh3_el_usage": 1,
     },
 )
 def grey_nh3_ef():
@@ -363,9 +363,9 @@ def nh3_plant_lifetime():
     comp_subtype="Normal",
     depends_on={
         "green_nh3_cost_without_h2": 1,
-        "nh3_lhv": 1,
         "nh3_is_h2_cost": 1,
         "nh3_h2_usage": 1,
+        "nh3_lhv": 1,
     },
 )
 def shipping_nh3_cost():
