@@ -1,0 +1,918 @@
+"""
+Module renewable_kerosene_and_naphtha_production
+Translated using PySD version 3.14.3
+"""
+
+@component.add(
+    name="BioKero cost",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "hvo_kerosene_cost_wo_h2": 1,
+        "hvo_kerosene_h2_cost_scaler": 1,
+        "biokero_h2_cost": 1,
+    },
+)
+def biokero_cost():
+    """
+    10% of the production costs is assumed covered through coproduct selling of naphtha and LPG.
+    """
+    return hvo_kerosene_cost_wo_h2() + hvo_kerosene_h2_cost_scaler() * biokero_h2_cost()
+
+
+@component.add(
+    name="BioKero H2 WTP",
+    units="€/kg",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "jetfuel_cost": 1,
+        "hvo_kerosene_cost_wo_h2": 1,
+        "hvo_kerosene_h2_cost_scaler": 1,
+    },
+)
+def biokero_h2_wtp():
+    return (jetfuel_cost() - hvo_kerosene_cost_wo_h2()) / hvo_kerosene_h2_cost_scaler()
+
+
+@component.add(
+    name="BioNaphtha cost",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "hvo_naphtha_cost_wo_h2": 1,
+        "bionaphtha_h2_cost": 1,
+        "hvo_naphtha_h2_cost_scaler": 1,
+    },
+)
+def bionaphtha_cost():
+    """
+    The naphtha coproduct sale cover 7.5% of the production costs. The LPG coproduct sale cover the remaining 2.5% of the production costs. Note here is that the naphtha output is quite low, which does not motivate this as the primary method to produce biogenic naphtha.
+    """
+    return (
+        hvo_naphtha_cost_wo_h2() + bionaphtha_h2_cost() * hvo_naphtha_h2_cost_scaler()
+    )
+
+
+@component.add(
+    name="BioNaphtha H2 WTP",
+    units="€/kg",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "naphtha_cost": 1,
+        "hvo_naphtha_cost_wo_h2": 1,
+        "hvo_naphtha_h2_cost_scaler": 1,
+    },
+)
+def bionaphtha_h2_wtp():
+    return (naphtha_cost() - hvo_naphtha_cost_wo_h2()) / hvo_naphtha_h2_cost_scaler()
+
+
+@component.add(
+    name="HtJ AF",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={"discount_rate": 2, "htj_lifetime": 1},
+)
+def htj_af():
+    return 1 / ((1 - (1 + discount_rate()) ** -htj_lifetime()) / discount_rate())
+
+
+@component.add(
+    name="HtJ CAPEX",
+    units="€/MWfuel",
+    comp_type="Auxiliary",
+    comp_subtype="with Lookup",
+    depends_on={"time": 1},
+)
+def htj_capex():
+    return np.interp(
+        time(),
+        [2019.0, 2030.0, 2040.0, 2050.0],
+        [2100000.0, 1600000.0, 1100000.0, 900000.0],
+    )
+
+
+@component.add(
+    name="HtJ CO2 usage",
+    units="tCO2/tliquids",
+    comp_type="Auxiliary",
+    comp_subtype="with Lookup",
+    depends_on={"time": 1},
+)
+def htj_co2_usage():
+    """
+    tCo2 per tons of output liquid fuels
+    """
+    return np.interp(time(), [2019.0, 2030.0, 2040.0, 2050.0], [4.3, 3.9, 3.6, 3.3])
+
+
+@component.add(
+    name="HtJ Excess Heat",
+    units="GJ/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="with Lookup",
+    depends_on={"time": 1},
+)
+def htj_excess_heat():
+    """
+    MWh heat per MWh input energy (losses)
+    """
+    return np.interp(time(), [2019.0, 2030.0, 2040.0, 2050.0], [0.3, 0.27, 0.27, 0.25])
+
+
+@component.add(
+    name="HtJ Fuel Gas cost recovery fraction",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "grey_ng_cost": 2,
+        "htj_fuel_gas_fraction": 2,
+        "jetfuel_cost": 1,
+        "htj_kerosene_fraction": 1,
+        "naphtha_cost": 1,
+        "htj_naphtha_fraction": 1,
+    },
+)
+def htj_fuel_gas_cost_recovery_fraction():
+    """
+    20% of the costs are assumed covered by the sale of naphtha.
+    """
+    return (grey_ng_cost() * htj_fuel_gas_fraction()) / (
+        grey_ng_cost() * htj_fuel_gas_fraction()
+        + jetfuel_cost() * htj_kerosene_fraction()
+        + naphtha_cost() * htj_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HtJ fuel gas fraction",
+    units="percent",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={"htj_kerosene_fraction": 1, "htj_naphtha_fraction": 1},
+)
+def htj_fuel_gas_fraction():
+    """
+    Percent of liquid fuels which is jetfuel
+    """
+    return 1 - htj_kerosene_fraction() - htj_naphtha_fraction()
+
+
+@component.add(
+    name="HtJ H2 Usage", units="MWh/MWh", comp_type="Constant", comp_subtype="Normal"
+)
+def htj_h2_usage():
+    """
+    MWh H2 per MWh energy input
+    """
+    return 0.995
+
+
+@component.add(
+    name="HtJ Kerosene cost recovery fraction",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "jetfuel_cost": 2,
+        "htj_kerosene_fraction": 2,
+        "htj_fuel_gas_fraction": 1,
+        "grey_ng_cost": 1,
+        "naphtha_cost": 1,
+        "htj_naphtha_fraction": 1,
+    },
+)
+def htj_kerosene_cost_recovery_fraction():
+    """
+    80% of the total costs are covered by the revenues generated by kerosene sale.
+    """
+    return (jetfuel_cost() * htj_kerosene_fraction()) / (
+        grey_ng_cost() * htj_fuel_gas_fraction()
+        + jetfuel_cost() * htj_kerosene_fraction()
+        + naphtha_cost() * htj_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HtJ Kerosene cost wo H2",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "htj_process_cost_wo_h2": 1,
+        "htj_kerosene_cost_recovery_fraction": 1,
+        "htj_kerosene_fraction": 1,
+        "htj_liquid_output": 1,
+    },
+)
+def htj_kerosene_cost_wo_h2():
+    return (
+        htj_process_cost_wo_h2()
+        * htj_kerosene_cost_recovery_fraction()
+        / (htj_kerosene_fraction() * htj_liquid_output())
+    )
+
+
+@component.add(
+    name="HtJ Kerosene fraction",
+    units="percent",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def htj_kerosene_fraction():
+    """
+    Percent of liquid fuels which is jetfuel
+    """
+    return 0.6
+
+
+@component.add(
+    name="HtJ Kerosene H2 cost scaler",
+    units="kg/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "htj_h2_usage": 1,
+        "htj_kerosene_cost_recovery_fraction": 1,
+        "h2_lhv": 1,
+        "htj_liquid_output": 1,
+        "htj_kerosene_fraction": 1,
+    },
+)
+def htj_kerosene_h2_cost_scaler():
+    """
+    MWh/MWh / (MWh/t) = t/MWh t/MWh * 1000 = kg/MWh kg/MWh / 3.6 = kg/GJ
+    """
+    return (
+        htj_h2_usage()
+        * htj_kerosene_cost_recovery_fraction()
+        / h2_lhv()
+        * 1000
+        / 3.6
+        / htj_liquid_output()
+        / htj_kerosene_fraction()
+    )
+
+
+@component.add(
+    name="HtJ Lifetime", units="Year", comp_type="Constant", comp_subtype="Normal"
+)
+def htj_lifetime():
+    return 25
+
+
+@component.add(
+    name="HtJ liquid output",
+    units="MWh/MWh",
+    comp_type="Auxiliary",
+    comp_subtype="with Lookup",
+    depends_on={"time": 1},
+)
+def htj_liquid_output():
+    """
+    MWh liquids per MWh of energy input (efficiency)
+    """
+    return np.interp(time(), [2019.0, 2030.0, 2040.0, 2050.0], [0.65, 0.7, 0.73, 0.75])
+
+
+@component.add(
+    name="HtJ liquids LHV",
+    units="GJ/t",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "htj_fuel_gas_fraction": 1,
+        "methane_lhv": 1,
+        "htj_kerosene_fraction": 1,
+        "jetfuel_lhv": 1,
+        "naphtha_lhv": 1,
+        "htj_naphtha_fraction": 1,
+    },
+)
+def htj_liquids_lhv():
+    return (
+        htj_fuel_gas_fraction() * methane_lhv()
+        + htj_kerosene_fraction() * jetfuel_lhv()
+        + htj_naphtha_fraction() * naphtha_lhv()
+    )
+
+
+@component.add(
+    name="HtJ Naphtha cost recovery fraction",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "naphtha_cost": 2,
+        "htj_naphtha_fraction": 2,
+        "htj_fuel_gas_fraction": 1,
+        "grey_ng_cost": 1,
+        "jetfuel_cost": 1,
+        "htj_kerosene_fraction": 1,
+    },
+)
+def htj_naphtha_cost_recovery_fraction():
+    """
+    20% of the costs are assumed covered by the sale of naphtha.
+    """
+    return (naphtha_cost() * htj_naphtha_fraction()) / (
+        grey_ng_cost() * htj_fuel_gas_fraction()
+        + jetfuel_cost() * htj_kerosene_fraction()
+        + naphtha_cost() * htj_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HtJ Naphtha cost wo H2",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "htj_process_cost_wo_h2": 1,
+        "htj_naphtha_cost_recovery_fraction": 1,
+        "htj_naphtha_fraction": 1,
+        "htj_liquid_output": 1,
+    },
+)
+def htj_naphtha_cost_wo_h2():
+    return (
+        htj_process_cost_wo_h2()
+        * htj_naphtha_cost_recovery_fraction()
+        / (htj_naphtha_fraction() * htj_liquid_output())
+    )
+
+
+@component.add(
+    name="HtJ Naphtha fraction",
+    units="percent",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={"htj_kerosene_fraction": 1},
+)
+def htj_naphtha_fraction():
+    """
+    Assumes that 75% of the remaining Fischer Tropsch liquids can be used as naphtha. If the kerosene fraction is 60% (base assumption) then this leaves 10 % of FT liquids as byproducts which are probably light products (LPG/fuel gas).
+    """
+    return (1 - htj_kerosene_fraction()) * 0.75
+
+
+@component.add(
+    name="HtJ Naphtha H2 cost scaler",
+    units="kg/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "htj_h2_usage": 1,
+        "htj_naphtha_cost_recovery_fraction": 1,
+        "h2_lhv": 1,
+        "htj_liquid_output": 1,
+        "htj_naphtha_fraction": 1,
+    },
+)
+def htj_naphtha_h2_cost_scaler():
+    """
+    MWh/MWh / (MWh/t) = t/MWh t/MWh * 1000 = kg/MWh kg/MWh / 3.6 = kg/GJ
+    """
+    return (
+        htj_h2_usage()
+        * htj_naphtha_cost_recovery_fraction()
+        / h2_lhv()
+        * 1000
+        / 3.6
+        / htj_liquid_output()
+        / htj_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HtJ operating hours",
+    units="hours",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def htj_operating_hours():
+    """
+    3 weeks of planned downtime per year
+    """
+    return 8760 * 49 / 52
+
+
+@component.add(
+    name="HtJ OPEX",
+    units="€/MWh",
+    comp_type="Auxiliary",
+    comp_subtype="with Lookup",
+    depends_on={"time": 1},
+)
+def htj_opex():
+    """
+    €/MWh of liquids/fuels
+    """
+    return np.interp(time(), [2019.0, 2030.0, 2040.0, 2050.0], [16.9, 12.7, 8.5, 7.4])
+
+
+@component.add(
+    name="HtJ process cost wo H2",
+    units="€/GJ input",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "ps_cc_cost": 1,
+        "cc_capture_rate": 1,
+        "htj_co2_usage": 1,
+        "htj_liquids_lhv": 1,
+        "htj_liquid_output": 2,
+        "htj_excess_heat": 1,
+        "heat_cost": 1,
+        "htj_af": 1,
+        "htj_operating_hours": 1,
+        "htj_opex": 1,
+        "htj_capex": 1,
+        "htj_variable": 1,
+    },
+)
+def htj_process_cost_wo_h2():
+    return (
+        ps_cc_cost()
+        / cc_capture_rate()
+        * htj_co2_usage()
+        / htj_liquids_lhv()
+        / htj_liquid_output()
+        - heat_cost() * htj_excess_heat() / 3.6
+        + (htj_af() * htj_capex() / htj_operating_hours() + htj_opex() + htj_variable())
+        / htj_liquid_output()
+        / 3.6
+    )
+
+
+@component.add(
+    name="HtJ variable",
+    units="€/MWh",
+    comp_type="Auxiliary",
+    comp_subtype="with Lookup",
+    depends_on={"time": 1},
+)
+def htj_variable():
+    """
+    €/MWh of liquids/fuels
+    """
+    return np.interp(time(), [2019.0, 2030.0, 2040.0, 2050.0], [5.3, 4.2, 3.2, 2.1])
+
+
+@component.add(
+    name="HVO Jet AF",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={"discount_rate": 2, "hvo_jet_lifetime": 1},
+)
+def hvo_jet_af():
+    return 1 / ((1 - (1 + discount_rate()) ** -hvo_jet_lifetime()) / discount_rate())
+
+
+@component.add(
+    name="HVO Jet Biomass usage",
+    units="MWh/MWh outputs",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_biomass_usage():
+    """
+    From internal optiflow numbers. In TG-FT w. h2, biomass to ft liquid energy efficiency is 0.554.
+    """
+    return 1.805
+
+
+@component.add(
+    name="HVO Jet CAPEX",
+    units="€/MWfuel",
+    comp_type="Auxiliary",
+    comp_subtype="with Lookup",
+    depends_on={"time": 1},
+)
+def hvo_jet_capex():
+    return np.interp(
+        time(),
+        [2019.0, 2030.0, 2040.0, 2050.0],
+        [4600000.0, 4140000.0, 3850000.0, 3680000.0],
+    )
+
+
+@component.add(
+    name="HVO Jet Electricity Usage",
+    units="MWh/MWh inputs",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_electricity_usage():
+    """
+    MWh electricity per MWh input energy
+    """
+    return 0.0033
+
+
+@component.add(
+    name="HVO Jet Fuel Gas cost recovery fraction",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "grey_ng_cost": 2,
+        "hvo_jet_lpg_fraction": 2,
+        "hvo_jet_fuel_gas_fraction": 2,
+        "hvo_jet_naphtha_fraction": 1,
+        "hvo_jet_kerosene_fraction": 1,
+        "naphtha_cost": 1,
+        "jetfuel_cost": 1,
+    },
+)
+def hvo_jet_fuel_gas_cost_recovery_fraction():
+    """
+    20% of the costs are assumed covered by the sale of naphtha.
+    """
+    return (grey_ng_cost() * (hvo_jet_fuel_gas_fraction() + hvo_jet_lpg_fraction())) / (
+        grey_ng_cost() * (hvo_jet_fuel_gas_fraction() + hvo_jet_lpg_fraction())
+        + jetfuel_cost() * hvo_jet_kerosene_fraction()
+        + naphtha_cost() * hvo_jet_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HVO Jet Fuel Gas fraction",
+    units="MWh/MWh input",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_fuel_gas_fraction():
+    return 0
+
+
+@component.add(
+    name="HVO Jet Gas Usage",
+    units="MWh/MWh",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_gas_usage():
+    """
+    MWh natural gas per MWh energy input
+    """
+    return 0.119
+
+
+@component.add(
+    name="HVO Jet H2 Usage",
+    units="MWh/MWh",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_h2_usage():
+    """
+    MWh H2 per MWh energy input
+    """
+    return 0.2537
+
+
+@component.add(
+    name="HVO Jet Kerosene cost recovery fraction",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "jetfuel_cost": 2,
+        "hvo_jet_kerosene_fraction": 2,
+        "hvo_jet_lpg_fraction": 1,
+        "hvo_jet_fuel_gas_fraction": 1,
+        "hvo_jet_naphtha_fraction": 1,
+        "naphtha_cost": 1,
+        "grey_ng_cost": 1,
+    },
+)
+def hvo_jet_kerosene_cost_recovery_fraction():
+    """
+    80% of the total costs are covered by the revenues generated by kerosene sale.
+    """
+    return (jetfuel_cost() * hvo_jet_kerosene_fraction()) / (
+        grey_ng_cost() * (hvo_jet_fuel_gas_fraction() + hvo_jet_lpg_fraction())
+        + jetfuel_cost() * hvo_jet_kerosene_fraction()
+        + naphtha_cost() * hvo_jet_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HVO Jet Kerosene fraction",
+    units="percent",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_kerosene_fraction():
+    """
+    Percent of liquid fuels which is jetfuel
+    """
+    return 0.5165
+
+
+@component.add(
+    name="HVO Jet Lifetime", units="Year", comp_type="Constant", comp_subtype="Normal"
+)
+def hvo_jet_lifetime():
+    return 25
+
+
+@component.add(
+    name="HVO Jet LPG fraction",
+    units="MWh/MWh input",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_lpg_fraction():
+    """
+    LPG and fuel gas 50/50 mix.
+    """
+    return 0
+
+
+@component.add(
+    name="HVO Jet Naphtha cost recovery fraction",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "naphtha_cost": 2,
+        "hvo_jet_naphtha_fraction": 2,
+        "hvo_jet_lpg_fraction": 1,
+        "jetfuel_cost": 1,
+        "hvo_jet_fuel_gas_fraction": 1,
+        "hvo_jet_kerosene_fraction": 1,
+        "grey_ng_cost": 1,
+    },
+)
+def hvo_jet_naphtha_cost_recovery_fraction():
+    """
+    7% of the costs are assumed covered by the sale of naphtha.
+    """
+    return (naphtha_cost() * hvo_jet_naphtha_fraction()) / (
+        grey_ng_cost() * (hvo_jet_lpg_fraction() + hvo_jet_fuel_gas_fraction())
+        + jetfuel_cost() * hvo_jet_kerosene_fraction()
+        + naphtha_cost() * hvo_jet_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HVO Jet Naphtha fraction",
+    units="percent",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_naphtha_fraction():
+    """
+    Percent of liquid fuels which is naphtha
+    """
+    return 0.483486
+
+
+@component.add(
+    name="HVO Jet operating hours",
+    units="hours",
+    comp_type="Constant",
+    comp_subtype="Normal",
+)
+def hvo_jet_operating_hours():
+    """
+    2 weeks of planned downtime per year
+    """
+    return 8760 * 50 / 52
+
+
+@component.add(
+    name="HVO Jet OPEX", units="€/MW", comp_type="Constant", comp_subtype="Normal"
+)
+def hvo_jet_opex():
+    """
+    €/MW/year of installed output jetfuel capacity.
+    """
+    return 104400
+
+
+@component.add(
+    name="HVO Jet variable", units="€/MWh", comp_type="Constant", comp_subtype="Normal"
+)
+def hvo_jet_variable():
+    """
+    €/MWh of output
+    """
+    return 1.06773
+
+
+@component.add(
+    name="HVO Kerosene cost wo H2",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "hvo_process_cost_wo_h2": 1,
+        "hvo_jet_kerosene_cost_recovery_fraction": 1,
+        "hvo_jet_kerosene_fraction": 1,
+    },
+)
+def hvo_kerosene_cost_wo_h2():
+    return (
+        hvo_process_cost_wo_h2()
+        * hvo_jet_kerosene_cost_recovery_fraction()
+        / hvo_jet_kerosene_fraction()
+    )
+
+
+@component.add(
+    name="HVO Kerosene H2 cost scaler",
+    units="kg/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "hvo_jet_h2_usage": 1,
+        "hvo_jet_kerosene_cost_recovery_fraction": 1,
+        "h2_lhv": 1,
+        "hvo_jet_kerosene_fraction": 1,
+    },
+)
+def hvo_kerosene_h2_cost_scaler():
+    """
+    MWh/MWh / (MWh/t) = t/MWh t/MWh * 1000 = kg/MWh kg/MWh / 3.6 = kg/GJ
+    """
+    return (
+        hvo_jet_h2_usage()
+        * hvo_jet_kerosene_cost_recovery_fraction()
+        / h2_lhv()
+        * 1000
+        / 3.6
+        / hvo_jet_kerosene_fraction()
+    )
+
+
+@component.add(
+    name="HVO Naphtha cost wo H2",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "hvo_process_cost_wo_h2": 1,
+        "hvo_jet_naphtha_cost_recovery_fraction": 1,
+        "hvo_jet_naphtha_fraction": 1,
+    },
+)
+def hvo_naphtha_cost_wo_h2():
+    return (
+        hvo_process_cost_wo_h2()
+        * hvo_jet_naphtha_cost_recovery_fraction()
+        / hvo_jet_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HVO Naphtha H2 cost scaler",
+    units="kg/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "hvo_jet_h2_usage": 1,
+        "hvo_jet_naphtha_cost_recovery_fraction": 1,
+        "h2_lhv": 1,
+        "hvo_jet_naphtha_fraction": 1,
+    },
+)
+def hvo_naphtha_h2_cost_scaler():
+    """
+    MWh/MWh / (MWh/t) = t/MWh t/MWh * 1000 = kg/MWh kg/MWh / 3.6 = kg/GJ
+    """
+    return (
+        hvo_jet_h2_usage()
+        * hvo_jet_naphtha_cost_recovery_fraction()
+        / h2_lhv()
+        * 1000
+        / 3.6
+        / hvo_jet_naphtha_fraction()
+    )
+
+
+@component.add(
+    name="HVO process cost wo H2",
+    units="€/GJ output",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "hvo_jet_electricity_usage": 1,
+        "grid_electricity_price": 1,
+        "biogas_cost": 1,
+        "hvo_jet_gas_usage": 1,
+        "uco_price": 1,
+        "hvo_jet_biomass_usage": 1,
+        "hvo_jet_af": 1,
+        "hvo_jet_capex": 1,
+        "hvo_jet_variable": 1,
+        "hvo_jet_opex": 1,
+        "hvo_jet_operating_hours": 1,
+    },
+)
+def hvo_process_cost_wo_h2():
+    return (
+        (
+            0 * hvo_jet_electricity_usage() * grid_electricity_price()
+            + 0 * hvo_jet_gas_usage() * biogas_cost() * 3.6
+            + hvo_jet_biomass_usage() * uco_price() * 3.6
+        )
+        + (
+            (hvo_jet_af() * hvo_jet_capex() + hvo_jet_opex())
+            / hvo_jet_operating_hours()
+            + hvo_jet_variable()
+        )
+    ) / 3.6
+
+
+@component.add(
+    name="Jetfuel LHV", units="GJ/t", comp_type="Constant", comp_subtype="Unchangeable"
+)
+def jetfuel_lhv():
+    """
+    https://en.wikipedia.org/wiki/Jet_fuel
+    """
+    return 43
+
+
+@component.add(
+    name="SynKero cost",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "htj_kerosene_cost_wo_h2": 1,
+        "synkero_h2_cost": 1,
+        "htj_kerosene_h2_cost_scaler": 1,
+    },
+)
+def synkero_cost():
+    """
+    Carbon cost in €/MWh output assuming all outputs LHV is equal to jetfuel's. The additional variable costs in €/MWh output using SynKero Output as the efficiency of the process. Here the potential heat sale is also subtracted. Then the annualized capex is added in €/MWh and fixed + variable OPEX in the same unit. Finally it is all divided by the jetfuel fraction, which assumes that 60% of the output is jetfuel. This price in €/MWh is then multiplied by 0.8, which assumes that sale of byproducts in the form of gasoline (20%) and LPG (20%) can bring in further cost reductions. 3600 is the conversion from MWh to MJ.
+    """
+    return htj_kerosene_cost_wo_h2() + synkero_h2_cost() * htj_kerosene_h2_cost_scaler()
+
+
+@component.add(
+    name="SynKero H2 WTP",
+    units="€/kg",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "jetfuel_cost": 1,
+        "htj_kerosene_cost_wo_h2": 1,
+        "htj_kerosene_h2_cost_scaler": 1,
+    },
+)
+def synkero_h2_wtp():
+    return (jetfuel_cost() - htj_kerosene_cost_wo_h2()) / htj_kerosene_h2_cost_scaler()
+
+
+@component.add(
+    name="SynNaphtha cost",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "htj_naphtha_cost_wo_h2": 1,
+        "htj_naphtha_h2_cost_scaler": 1,
+        "synnaphtha_h2_cost": 1,
+    },
+)
+def synnaphtha_cost():
+    """
+    Assume that 80 % of the costs are covered by the jetfuel revenue (jetfuel is 60% of the output) - then assume that 30 % of the output is suitable as naphtha and sell that, covering the 20% remaining costs.
+    """
+    return (
+        htj_naphtha_cost_wo_h2() + synnaphtha_h2_cost() * htj_naphtha_h2_cost_scaler()
+    )
+
+
+@component.add(
+    name="SynNaphtha H2 WTP",
+    units="€/kgH2",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={
+        "naphtha_cost": 1,
+        "htj_naphtha_cost_wo_h2": 1,
+        "htj_naphtha_h2_cost_scaler": 1,
+    },
+)
+def synnaphtha_h2_wtp():
+    return (naphtha_cost() - htj_naphtha_cost_wo_h2()) / htj_naphtha_h2_cost_scaler()
+
+
+@component.add(
+    name="UCO PRICE",
+    units="€/GJ",
+    comp_type="Auxiliary",
+    comp_subtype="Normal",
+    depends_on={"biomass_price": 1},
+)
+def uco_price():
+    """
+    UCO: used cooking oil. Price is assumed to develop similarly to biomass. Source for historical cost: (around 900 $/t (25 $/GJ assuming LHV of 36 GJ/t) in 2024) https://www.spglobal.com/commodityinsights/en/market-insights/latest-news/a griculture/100423-global-uco-supply-to-double-by-2030-as-us-eu-policies-dri ve-asian-supply
+    """
+    return biomass_price()

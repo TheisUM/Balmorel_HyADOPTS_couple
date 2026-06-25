@@ -49,6 +49,7 @@ class data_loading_class:
     
     # Function which loads the carbon taxes from self
     def load_carbon_taxes(self, *args, **kwargs):
+        print("hello")
         args = list(args)
         kwargs = dict(kwargs)
 
@@ -65,6 +66,8 @@ class data_loading_class:
                                 index=self.carbon_tax["Year"].values,
                                 data=self.carbon_tax["EUR2015/tCO2"].values * self.inflation.loc[2015]['Inflation Multiplier'],
                                 dtype=float)
+        print("Loaded carbon taxes:")
+        print(self.carbon_taxes)
         
         if "sensitivity" in kwargs:
             self.carbon_taxes = self.carbon_taxes * kwargs["sensitivity"]

@@ -218,7 +218,7 @@ __marimo__/
 .streamlit/secrets.toml
 
 # Further files to ignore can be added below
-*.inc
+# *.inc
 *.gdx
 *.xlsx
 *.xlsm
